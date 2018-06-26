@@ -8,6 +8,9 @@ var myGlobals = {
   allSites:[],
   allLocations:[],
   allCoordinates:[],
+
+  
+
 };
 
 // Constructors ============================================================================================================
@@ -42,6 +45,18 @@ var siteOptions = function(siteOption1,siteOption2,siteOption3,siteImage1,siteIm
 };
 
 
+// creating objects using constructors
+// suspects
+new Suspects('Demi', 'She is a 3 legged dog');
+new Suspects('Allie', 'She can teach people things');
+new Suspects('Brian Nations', 'He is good at CSS');
+
+//scenarios
+
+new Heists(' stole all the CSS in the land!');
+new Heists(' stole all of the cereal bars!');
+new Heists(' stole my lunch money!');
+
 // objects ==================================================================================================================
 var narration = {
   success: 'You caught the suspect!',
@@ -50,23 +65,43 @@ var narration = {
 };
 
 var logic = {
-  totalToWin: 0,
+  cluesNeededToWin: 7,
   playerProgress: 0,
   gameLength: 0, // length in hours
-  timeRemaining: 0, // time left in hours
+  timeRemaining: 120, // time left in hours
   siteTravel: [1, 2, 3],
   finalSite: 0, // randomly select final site to capture suspect
   finalRound: false,
   nextLocation: '',
   startLocation: '',
   gameDifficulty: '',
+  gameSuspect: '',
+  gameScenario: '',
 };
 
 
 // gameplay ===================================================================================================================
 // specify starting logic variables
-// choose random scenario
-// choose random suspect
+var gameSetting = function() {
+  var generateGameSuspect = Math.floor(Math.random() * myGlobals.allSuspects.length);
+  var generateGameScenario = Math.floor(Math.random() * myGlobals.allScenarios.length);
+  var generateGameStartLocation = Math.floor(Math.random() * myGlobals.allLocations.length);
+  logic.gameSuspect = (myGlobals.allSuspects[generateGameSuspect].name);
+  logic.gameScenario = (myGlobals.allScenarios[generateGameScenario].scenario);
+  logic.startLocation =  (myGlobals.allLocations[generateGameStartLocation]);
+};
+
+// generates the distance/hours used when traveling
+Math.getDistance = function(x1, y1, x2, y2) {
+  var xs = x2 - x1;
+  var ys = y2 - y1;
+  xs *= xs;
+  ys *= ys;
+  return Math.ceil(Math.sqrt(xs + ys));
+};
+
+gameSetting();
+Math.getDistance(4, 7, 2, 9);
 
 // functions ==================================================================================================================
 // create randomizer here
