@@ -8,9 +8,6 @@ var myGlobals = {
   allSites:[],
   allLocations:[],
   allCoordinates:[],
-
-  
-
 };
 
 // Constructors ============================================================================================================
@@ -34,7 +31,7 @@ var Locations = function(city, coordinates, fact, cityImage, sites, questions) {
   this.questions = questions; // pass in as an object (correct, wrong, final round)
   myGlobals.allLocations.push(this);
 };
-var siteOptions = function(siteOption1,siteOption2,siteOption3,siteImage1,siteImage2,siteImage3){
+var SiteOptions = function(siteOption1,siteOption2,siteOption3,siteImage1,siteImage2,siteImage3){
   this.siteOption1 = siteOption1;
   this.siteOption2 = siteOption2;
   this.siteOption3 = siteOption3;
@@ -43,19 +40,11 @@ var siteOptions = function(siteOption1,siteOption2,siteOption3,siteImage1,siteIm
   this.siteImage3 = siteImage3;
   myGlobals.allSites.push(this);
 };
-
-
-// creating objects using constructors
-// suspects
-new Suspects('Demi', 'She is a 3 legged dog');
-new Suspects('Allie', 'She can teach people things');
-new Suspects('Brian Nations', 'He is good at CSS');
-
-//scenarios
-
-new Heists(' stole all the CSS in the land!');
-new Heists(' stole all of the cereal bars!');
-new Heists(' stole my lunch money!');
+var Coordinates = function(x,y){
+  this.x = x;
+  this.y = y;
+  myGlobals.allCoordinates.push(this);
+};
 
 // objects ==================================================================================================================
 var narration = {
