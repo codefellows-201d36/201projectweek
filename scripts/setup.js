@@ -1,9 +1,9 @@
 'use strict';
 
-// suspects ====================================================================
-new Suspects('Brian Nations', 'bio');
-// Heists ================================================================================
-new Heists('All the style has been stolen from your website!');
+
+
+
+
 //Locations ==============================================================================
 new Locations('Central Seattle',0,'fact','img',myGlobals.allSites[0]);
 new Locations('Seattle Waterfront');

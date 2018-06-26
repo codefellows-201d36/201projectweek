@@ -7,6 +7,7 @@ var myGlobals = {
   allScenarios: [],
   allSites:[],
   allLocations:[],
+  allCoordinates:[],
 };
 
 // Constructors ============================================================================================================
@@ -39,6 +40,7 @@ var siteOptions = function(siteOption1,siteOption2,siteOption3,siteImage1,siteIm
   this.siteImage3 = siteImage3;
   myGlobals.allSites.push(this);
 };
+
 
 // objects ==================================================================================================================
 var narration = {
