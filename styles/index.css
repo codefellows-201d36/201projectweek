@@ -1,0 +1,12 @@
+/* Styles go here! */
+body {
+  background-image: linear-gradient(
+    rgba(220, 220, 220, 0.8), 
+    rgba(220, 220, 220, 0.8)
+  ), url(../img/home.jpg);
+  background-size: cover;
+}
+
+.logo img {
+  filter: grayscale(100%);
+}
