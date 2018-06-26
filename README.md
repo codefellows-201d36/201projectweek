@@ -7,6 +7,8 @@
 
 # References
 * **Eric Meyer's Reset CSS** | v2.0 | 20110126 | License: none (public domain): http://meyerweb.com/eric/tools/css/reset/
+# Images
+* Photo by Nik Shuliahin on Unsplash: https://unsplash.com/photos/rkFIIE9PxH0
 
 # Group Agreement
 ## What will your group do when it encounters conflict?
