@@ -34,7 +34,7 @@ var Locations = function(city, coordinates, fact, cityImage, sites, questions) {
 };
 var SiteOptions = function(siteOptions, siteImages){
   this.siteOptions = siteOptions;
-  this.siteImage = siteImages;
+  this.siteImages = siteImages;
   myGlobals.allSites.push(this);
 };
 var Coordinates = function(x,y){
@@ -58,7 +58,9 @@ var logic = {
   siteTravel: [1, 2, 3],
   finalRound: false,
   nextLocation: '',
+  currentLocation: '',
   startLocation: '',
+  correctSite: '',
   gameSuspect: '',
   gameScenario: '',
   username: '',
@@ -94,7 +96,8 @@ var gameSettings = function() {
   // map random selections to logic
   logic.gameSuspect = (myGlobals.allSuspects[generateGameSuspect].name);
   logic.gameScenario = (myGlobals.allScenarios[generateGameScenario].scenario);
-  logic.startLocation =  (myGlobals.allLocations[generateGameStartLocation]);
+  logic.startLocation = (myGlobals.allLocations[generateGameStartLocation]);
+  logic.currentLocation = (myGlobals.allLocations[generateGameStartLocation]);
   myGlobals.allLocations[generateGameStartLocation].hasBeenUsed = true;
   generateGameNextLocation();
 };
@@ -120,13 +123,38 @@ Math.getDistance = function(x1, y1, x2, y2) {
   return Math.ceil(Math.sqrt(xs + ys));
 };
 
+// clears the page nodes
+function clearNode(myId) {
+  var node = document.getElementById(myId);
+  while (node.hasChildNodes()) {
+    node.removeChild(node.firstChild);
+  }
+}
+
 function renderPage() {
   // display current location
+  var currentGameLocation = document.getElementById('myLocation');
+  currentGameLocation.textContent = logic.currentLocation;
   // retrieve next location (in advance)
+  logic.nextLocation = logic.pathToVictory[1];
   // populate page nodes
+  var quit = document.getElementById('userQuit');
+  var timestamp = document.getElementById('myTimestamp');
+  var siteHeading = document.getElementById('myHeading');
+  siteHeading.textContent = logic.correctSite;
+  timestamp.textContent = logic.timeRemaining;
+  quit.textContent = 'Quit';
 }
 
 function resetPage() {
   // run clearNode function on all page div nodes
+  clearNode();
   // run renderPage
+  renderPage();
+}
+
+// generates the correct site
+function generateCorrectSite() {
+  logic.correctSite = logic.pathToVictory[0].sites.siteOptions[Math.floor(Math.random() * 3)];
+  console.log(logic.correctSite);
 }
