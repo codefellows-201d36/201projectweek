@@ -1,10 +1,9 @@
 // Safety Goggles ON!
 'use strict';
 
-// global variables ========================================================================================================
-var sampleOne = document.getElementById('selection1');
-var sampleTwo = document.getElementById('selection2');
-var sampleThree = document.getElementById('selection3');
+// =========================================================================================================================
+// global variables
+// =========================================================================================================================
 var myGlobals = {
   siteSelections: [],
   allSuspects: [],
@@ -12,10 +11,44 @@ var myGlobals = {
   allSites:[],
   allLocations:[],
   allCoordinates:[],
-  locationSelections: [sampleOne, sampleTwo, sampleThree],
+  locationSelections: [myGlobals.selection1, myGlobals.selection2, myGlobals.selection3],
+  selection1: document.getElementById('selection1'),
+  selection2: document.getElementById('selection2'),
+  selection3: document.getElementById('selection3'),
+  investigateBtn: document.getElementById('btnInvestigate'),
+  travelBtn: document.getElementById('btnTravel'),
 };
 
-// Constructors ============================================================================================================
+var logic = {
+  cluesNeededToWin: 7,
+  pathToVictory: [],
+  playerProgress: 0,
+  timeRemaining: 120, // time left in hours
+  siteTravel: [1, 2, 3],
+  finalRound: false,
+  nextLocation: [],
+  correctLocation: '',
+  currentLocation: '',
+  startLocation: '',
+  gameSuspect: '',
+  gameScenario: '',
+  username: '',
+};
+
+// =========================================================================================================================
+// Constructors
+// =========================================================================================================================
+var Locations = function(city, coordinates, fact, cityImage, sites, questions) {
+  this.city = city;
+  this.coordinates = coordinates; // pass in as an array [x, y]
+  this.fact = fact;
+  this.cityImage = cityImage;
+  this.sites = sites; // pass in as an object (site location, site image)
+  this.questions = questions; // pass in as an object (correct, wrong, final round)
+  this.hasBeenUsed = false;
+  myGlobals.allLocations.push(this);
+};
+
 var Suspects = function(name, bio) {
   this.name = name;
   this.bio = bio;
@@ -27,26 +60,22 @@ var Heists = function(scenario) {
   myGlobals.allScenarios.push(this);
 };
 
-var Locations = function(city, coordinates, fact, cityImage, sites, questions) {
-  this.city = city;
-  this.coordinates = coordinates; // pass in as an array [x, y]
-  this.fact = fact;
-  this.cityImage = cityImage;
-  this.sites = sites; // pass in as an object (site location, site image)
-  this.questions = questions; // pass in as an object (correct, wrong, final round)
-  this.hasBeenUsed = false;
-  myGlobals.allLocations.push(this);
-};
+
 var SiteOptions = function(siteOptions, siteImages){
   this.siteOptions = siteOptions;
   this.siteImages = siteImages;
   myGlobals.allSites.push(this);
 };
+
 var Coordinates = function(x,y){
   this.x = x;
   this.y = y;
   myGlobals.allCoordinates.push(this);
 };
+
+// =========================================================================================================================
+// Temporary Data Load -- Will be moving to Setup.js (maybe)
+// =========================================================================================================================
 
 new Suspects('Brian Nations', 'He is good at CSS');
 // new Suspects('Demi', 'She is a 3 legged dog');
@@ -57,7 +86,7 @@ new Heists(' stole all the CSS in the land!');
 // new Heists(' stole all of the cereal bars!');
 // new Heists(' stole my lunch money!');
 
-// sites =========================================================
+// sites ===============================================
 new SiteOptions (['Seattle Art Museum','Amazon','Space Needle'],['random image','random image','random image']);//[0]
 new SiteOptions(['Pike Place','Ferris Wheel', 'Seattle Aquarium'],['random image','random image','random image']);//[1]
 new SiteOptions(['Ballard Locks','Golden Gardens','Norweigan Museum'],['random image','random image','random image']);//[2]
@@ -74,24 +103,24 @@ new SiteOptions(['Husky Stadium','University Village','Cherry Blossom Trees'],['
 new SiteOptions(['Western Washington University','Canadian Border','Mount Baker'],['random image','random image','random image']);//[13]
 new SiteOptions(['Hoop Fest','Gonzaga','Spokane Falls'],['random image','random image','random image']);//[14]
 
-//Locations ==============================================================================
-new Locations('Central Seattle',myGlobals.allCoordinates[0],'fact','img',myGlobals.allSites[0],'question'); //[0]
-new Locations('Seattle Waterfront',myGlobals.allCoordinates[1],'fact','img',myGlobals.allSites[1],'question'); //[1]
-new Locations('Ballard',myGlobals.allCoordinates[2],'fact','img',myGlobals.allSites[2],'question'); //[2]
-new Locations('Fremont',myGlobals.allCoordinates[3],'fact','img',myGlobals.allSites[3],'question'); //[3]
-new Locations('South Seattle',myGlobals.allCoordinates[4],'fact','img',myGlobals.allSites[4],'question'); //[4]
-new Locations('Bellevue',myGlobals.allCoordinates[5],'fact','img',myGlobals.allSites[5],'question'); //[5]
-new Locations('Redmond',myGlobals.allCoordinates[6],'fact','img',myGlobals.allSites[6],'question'); //[6]
-new Locations('Tacoma',myGlobals.allCoordinates[7],'fact','img',myGlobals.allSites[7],'question'); //[7]
-new Locations('Leavenworth',myGlobals.allCoordinates[8],'fact','img',myGlobals.allSites[8],'question'); //[8]
-new Locations('Walla Walla',myGlobals.allCoordinates[9],'fact','img',myGlobals.allSites[9],'question'); //[9]
-new Locations('West Coast',myGlobals.allCoordinates[10],'fact','img',myGlobals.allSites[10],'question'); //[10]
-new Locations('SeaTac/Tukwila',myGlobals.allCoordinates[11],'fact','img',myGlobals.allSites[11],'question'); //[11]
-new Locations('University District',myGlobals.allCoordinates[12],'fact','img',myGlobals.allSites[12],'question'); //[12]
-new Locations('Bellingham',myGlobals.allCoordinates[13],'fact','img',myGlobals.allSites[13],'question'); //[13]
-new Locations('Spokane',myGlobals.allCoordinates[14],'fact','img',myGlobals.allSites[14],'question'); //[14]
+//Locations ===============================================
+new Locations('Central Seattle',myGlobals.allCoordinates[0],'fact','img/central-seattle.jpg',myGlobals.allSites[0], centralSeattlePointer); //[0]
+new Locations('Seattle Waterfront',myGlobals.allCoordinates[1],'fact','img/seattle-waterfront.jpg',myGlobals.allSites[1], waterFrontPointer); //[1]
+new Locations('Ballard',myGlobals.allCoordinates[2],'fact','img/ballard.jpg',myGlobals.allSites[2],ballardPointer); //[2]
+new Locations('Fremont',myGlobals.allCoordinates[3],'fact','img/fremont.jpg',myGlobals.allSites[3],fremontPointer); //[3]
+new Locations('South Seattle',myGlobals.allCoordinates[4],'fact','img/south-seattle.jpg',myGlobals.allSites[4],southSeattlePointer); //[4]
+new Locations('Bellevue',myGlobals.allCoordinates[5],'fact','img/bellevue.jpg',myGlobals.allSites[5],bellevuePointer); //[5]
+new Locations('Redmond',myGlobals.allCoordinates[6],'fact','img/redmond.jpg',myGlobals.allSites[6],redmondPointer); //[6]
+new Locations('Tacoma',myGlobals.allCoordinates[7],'fact','img/tacoma.jpg',myGlobals.allSites[7],tacomaPointer); //[7]
+new Locations('Leavenworth',myGlobals.allCoordinates[8],'fact','img/leavenworth.jpg',myGlobals.allSites[8],leavenworthPointer); //[8]
+new Locations('Walla Walla',myGlobals.allCoordinates[9],'fact','img/walla-walla.jpg',myGlobals.allSites[9],wallaWallaPointer); //[9]
+new Locations('West Coast',myGlobals.allCoordinates[10],'fact','img/west-coast.jpg',myGlobals.allSites[10],westCoastPointer); //[10]
+new Locations('SeaTac/Tukwila',myGlobals.allCoordinates[11],'fact','img/tukwila.jpg',myGlobals.allSites[11],seaTacTukwillaPointer); //[11]
+new Locations('University District',myGlobals.allCoordinates[12],'fact','img/university-district.jpg',myGlobals.allSites[12],uDistrictPointer); //[12]
+new Locations('Bellingham',myGlobals.allCoordinates[13],'fact','img/bellingham.jpg',myGlobals.allSites[13],bellinghamPointer); //[13]
+new Locations('Spokane',myGlobals.allCoordinates[14],'fact','img/spokane.jpg',myGlobals.allSites[14],spokanePointer); //[14]
 
-// coordinates
+// coordinates ===============================================
 new Coordinates(5, 5);//[0]
 new Coordinates(4.9, 5);//[1]
 new Coordinates(4.9, 5.1);//[2]
@@ -108,189 +137,12 @@ new Coordinates(5.6, 5);//[12]
 new Coordinates(4, 1);//[13]
 new Coordinates(9, 4.8);//[14]
 
-// objects ==================================================================================================================
+// objects ===============================================
 var narration = {
   success: 'You caught the suspect!',
   failure: 'You failed to catch the suspect.',
   intro: 'placeholder',
-  siteDialog: {
-
-  }
 };
-
-var logic = {
-  cluesNeededToWin: 7,
-  pathToVictory: [],
-  playerProgress: 0,
-  timeRemaining: 120, // time left in hours
-  siteTravel: [1, 2, 3],
-  finalRound: false,
-  nextLocation: '',
-  correctLocation: '',
-  currentLocation: '',
-  startLocation: '',
-  gameSuspect: '',
-  gameScenario: '',
-  username: '',
-};
-
-// execution ===================================================================================================================
-// load initial game settings
-// gameSettings();
-
-// populate screen
-// renderPage();
-
-// game logic
-// determine if destination choice is correct
-// location choice, travel choice, etc. (right and wrong)
-// gameplay outcome aka end game logic
-
-// functions ==================================================================================================================
-
-// rerender node
-function clearNode(myId) {
-  var node = document.getElementById(myId);
-  while (node.hasChildNodes()) {
-    node.removeChild(node.firstChild);
-  }
-}
-
-// generate starting settings
-var gameSettings = function() {
-  var generateGameSuspect = Math.floor(Math.random() * myGlobals.allSuspects.length);
-  var generateGameScenario = Math.floor(Math.random() * myGlobals.allScenarios.length);
-  var generateGameStartLocation = Math.floor(Math.random() * myGlobals.allLocations.length);
-  // map random selections to logic
-  logic.gameSuspect = (myGlobals.allSuspects[generateGameSuspect].name);
-  logic.gameScenario = (myGlobals.allScenarios[generateGameScenario].scenario);
-  logic.startLocation = (myGlobals.allLocations[generateGameStartLocation]);
-  logic.currentLocation = (myGlobals.allLocations[generateGameStartLocation]);
-  myGlobals.allLocations[generateGameStartLocation].hasBeenUsed = true;
-  generateGameNextLocation();
-};
-
-// generates next location
-function generateGameNextLocation() {
-  var index = NaN;
-  for (var i =0; i < logic.cluesNeededToWin; i++) {
-    do {
-      index = Math.floor(Math.random() * myGlobals.allLocations.length);
-    } while (myGlobals.allLocations[index].hasBeenUsed === true);
-    logic.pathToVictory.push(myGlobals.allLocations[index]);
-    myGlobals.allLocations[index].hasBeenUsed = true;
-  }
-}
-
-// generates the distance/hours used when traveling
-Math.getDistance = function(x1, y1, x2, y2) {
-  var xs = x2 - x1;
-  var ys = y2 - y1;
-  xs *= xs;
-  ys *= ys;
-  return Math.ceil(Math.sqrt(xs + ys));
-};
-
-// clears the page nodes
-function clearNode(myId) {
-  var node = document.getElementById(myId);
-  while (node.hasChildNodes()) {
-    node.removeChild(node.firstChild);
-  }
-}
-
-function renderPage() {
-  // display current location
-  var currentGameLocation = document.getElementById('myLocation');
-  currentGameLocation.textContent = logic.currentLocation.city;
-  // retrieve next location (in advance)
-  logic.nextLocation = logic.pathToVictory[1];
-  // populate page nodes
-  var quit = document.getElementById('userQuit');
-  var timestamp = document.getElementById('myTimestamp');
-  var siteHeading = document.getElementById('myHeading');
-  var currentLocationImage = document.getElementById('locationImage');
-  var travelButton = document.getElementById('btnTravel');
-  var travelInvestigate = document.getElementById('btnInvestigate');
-  siteHeading.textContent = logic.currentLocation.city;
-  timestamp.textContent = logic.timeRemaining;
-  quit.textContent = 'Quit';
-  currentLocationImage.src = logic.currentLocation.cityImage;
-  travelButton.textContent = 'Travel';
-  travelInvestigate.textContent = 'Investigate';
-  randomLocations();
-}
-
-function randomLocations() {
-  do {
-    // generate random numbers for indices of allLocations array
-    var randomOne = Math.floor(Math.random() * myGlobals.allLocations.length);
-    var randomTwo = Math.floor(Math.random() * myGlobals.allLocations.length);
-    var randomThree = Math.floor(Math.random() * myGlobals.allLocations.length);
-  } while (randomOne === randomTwo
-    || randomOne === randomThree
-    || randomTwo === randomThree
-    || randomOne === myGlobals.allLocations.indexOf(logic.pathToVictory[0])
-    || randomTwo === myGlobals.allLocations.indexOf(logic.pathToVictory[0])
-    || randomThree === myGlobals.allLocations.indexOf(logic.pathToVictory[0]));
-  myGlobals.locationSelections[0].textContent = myGlobals.allLocations[randomOne].city;
-  myGlobals.locationSelections[1].textContent = myGlobals.allLocations[randomTwo].city;
-  myGlobals.locationSelections[2].textContent = myGlobals.allLocations[randomThree].city;
-  myGlobals.locationSelections[Math.floor(Math.random() * 3)].textContent = logic.pathToVictory[0].city;
-}
-
-// populates the investigation options
-function populateSiteSelections() {
-  sampleOne.textContent = logic.currentLocation.sites.siteOptions[0];
-  sampleTwo.textContent = logic.currentLocation.sites.siteOptions[1];
-  sampleThree.textContent = logic.currentLocation.sites.siteOptions[2];
-}
-
-function resetPage() {
-  // run clearNode function on all page div nodes
-  clearNode();
-  // run renderPage
-  renderPage();
-}
-
-// generates the correct site
-function generateCorrectSite() {
-  logic.correctSite = logic.pathToVictory[0].sites.siteOptions[Math.floor(Math.random() * 3)];
-  console.log(logic.correctSite);
-}
-
-gameSettings();
-
-// event handlers
-// for selection lis
-function selection(event) {
-  console.log('touched');
-}
-
-// for investigation li
-function investigation(event) {
-  populateSiteSelections();
-  console.log('hello');
-}
-
-// for travel li
-function travel(event) {
-  randomLocations();
-}
-
-// event listeners ===============================================================================
-// for selection lis
-var selectionOne = document.getElementById('selection1');
-var selectionTwo = document.getElementById('selection2');
-var selectionThree = document.getElementById('selection3');
-selectionOne.addEventListener('click', selection);
-selectionTwo.addEventListener('click', selection);
-selectionThree.addEventListener('click', selection);
-
-
-
-
-/* when the game starts, generate an array of 7 locations. We'll call this the 'Victory path array'. You get a set of clues that point to a location. IF the player goes to the next corresponding index location in the victory path, they are fed another set of pointer clues. */
 
 var centralSeattlePointer = {
   clue1:`I heard he was trying to find "The Hammering Man".`,
@@ -400,28 +252,167 @@ var wrongLocationAnswers = {
   wrong15:`I ate a "medicinal cookie" earlier and I feel strange. What was the question again?`,
   wrong16:`I’m just about to leave. Can you come back tomorrow?`,
   wrong17:`Nothing unusual ever happens around here.`,
+};
+
+// =========================================================================================================================
+// Functions
+// =========================================================================================================================
+// generate starting settings
+var gameSettings = function() {
+  // assign random value to temporary variable
+  var generateGameSuspect = Math.floor(Math.random() * myGlobals.allSuspects.length);
+  var generateGameScenario = Math.floor(Math.random() * myGlobals.allScenarios.length);
+  var generateGameStartLocation = Math.floor(Math.random() * myGlobals.allLocations.length);
+
+  // map starting values
+  logic.gameSuspect = (myGlobals.allSuspects[generateGameSuspect].name);
+  logic.gameScenario = (myGlobals.allScenarios[generateGameScenario].scenario);
+  logic.startLocation = (myGlobals.allLocations[generateGameStartLocation]);
+  logic.currentLocation = logic.startLocation;
+  myGlobals.allLocations[generateGameStartLocation].hasBeenUsed = true;
+  generateGameNextLocation();
+};
+
+// Render the game page
+function renderPage() {
+  // render current location to page
+  var currentGameLocationElement = document.getElementById('myLocation');
+  currentGameLocationElement.textContent = logic.currentLocation.city;
+
+  // retrieve next location (and remove value from pathToVictory)
+  for (var next; next < logic.pathToVictory; next++) {
+    logic.nextLocation = logic.pathToVictory[next];
+    logic.pathToVictory.splice(next, 1);
+  }
+
+  // Prepare page nodes
+  var quit = document.getElementById('userQuit');
+  var timestamp = document.getElementById('myTimestamp');
+  var siteHeading = document.getElementById('myHeading');
+  var currentLocationImage = document.getElementById('locationImage');
+  var travelButton = document.getElementById('btnTravel');
+  var travelInvestigate = document.getElementById('btnInvestigate');
+  var myLocation = document.getElementById('myLocation');
+  var myTimeStamp = document.getElementById('myTimestamp');
+
+  // Render pages nodes
+  quit.textContent = 'Leave Game';
+  timestamp.textContent = logic.timeRemaining;
+  siteHeading.textContent = logic.currentLocation.city;
+  currentLocationImage.src = logic.currentLocation.cityImage;
+  travelButton.textContent = 'Travel';
+  travelInvestigate.textContent = 'Investigate';
+  myLocation.textContent = 'Location: ' + logic.currentLocation.city;
+  myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
+  randomLocations();
 }
 
-var npcRoles = [`Tour Guide`,`Foreign Exchange Student`,`Spiritual Leader`,`Photographer`,`Uber Driver`,`Artist`,`Hobo`,`Bus Driver`,`Cyclist`,`Yoga Instructor`,`Hipster`,`A CodeFellow`,`Hotel Manager`,`Reporter`,`Professional`,`Consultant`,`Specialist`,`Jogger`]
+// generates next location
+function generateGameNextLocation() {
+  var index = NaN;
+  for (var i=0; i < logic.cluesNeededToWin; i++) {
+    do {
+      index = Math.floor(Math.random() * myGlobals.allLocations.length);
+    } while (myGlobals.allLocations[index].hasBeenUsed === true);
 
+    // map values to variables
+    logic.pathToVictory.push(myGlobals.allLocations[index]);
+    myGlobals.allLocations[index].hasBeenUsed = true;
+  }
+}
 
+// Random location selector
+function randomLocations() {
+  do {
+    // generate random numbers for indices of allLocations array
+    var randomOne = Math.floor(Math.random() * myGlobals.allLocations.length);
+    var randomTwo = Math.floor(Math.random() * myGlobals.allLocations.length);
+    var randomThree = Math.floor(Math.random() * myGlobals.allLocations.length);
+  } while (randomOne === randomTwo
+    || randomOne === randomThree
+    || randomTwo === randomThree
+    || randomOne === myGlobals.allLocations.indexOf(logic.pathToVictory[0])
+    || randomTwo === myGlobals.allLocations.indexOf(logic.pathToVictory[0])
+    || randomThree === myGlobals.allLocations.indexOf(logic.pathToVictory[0]));
+  myGlobals.locationSelections[0].textContent = myGlobals.allLocations[randomOne].city;
+  myGlobals.locationSelections[1].textContent = myGlobals.allLocations[randomTwo].city;
+  myGlobals.locationSelections[2].textContent = myGlobals.allLocations[randomThree].city;
+  myGlobals.locationSelections[Math.floor(Math.random() * 3)].textContent = logic.pathToVictory[0].city;
+}
 
+// rerender node
+function clearNode(myId) {
+  var node = document.getElementById(myId);
+  while (node.hasChildNodes()) {
+    node.removeChild(node.firstChild);
+  }
+}
 
+// generates the distance/hours used when traveling
+Math.getDistance = function(x1, y1, x2, y2) {
+  var xs = x2 - x1;
+  var ys = y2 - y1;
+  xs *= xs;
+  ys *= ys;
+  return Math.ceil(Math.sqrt(xs + ys));
+};
 
+// clears the page nodes
+function clearNode(myId) {
+  var node = document.getElementById(myId);
+  while (node.hasChildNodes()) {
+    node.removeChild(node.firstChild);
+  }
+}
 
+// populates the investigation options
+function populateSiteSelections() {
+  myGlobals.selection1.textContent = logic.currentLocation.sites.siteOptions[0];
+  myGlobals.selection2.textContent = logic.currentLocation.sites.siteOptions[1];
+  myGlobals.selection3.textContent = logic.currentLocation.sites.siteOptions[2];
+}
 
+// generates the correct site
+function generateCorrectSite() {
+  logic.correctSite = logic.pathToVictory[0].sites.siteOptions[Math.floor(Math.random() * 3)];
+  console.log(logic.correctSite);
+}
 
+// =========================================================================================================================
+// Event Handlers
+// =========================================================================================================================
+// for selection <li>'s
+function selection(event) {
+  console.log('touched');
+}
 
+// for investigation <li>
+function investigation(event) {
+  populateSiteSelections();
+  console.log('hello');
+}
 
+// for travel <li>
+function travel(event) {
+  randomLocations();
+}
 
+// =========================================================================================================================
+// Execution Code
+// =========================================================================================================================
+gameSettings();
+renderPage();
 
+// Event listner for selection <li>'s
+myGlobals.selection1.addEventListener('click', selection);
+myGlobals.selection2.addEventListener('click', selection);
+myGlobals.selection3.addEventListener('click', selection);
 
+// Event listner for investigation <li>
+myGlobals.investigateBtn.addEventListener('click', investigation);
 
-// for investigation li
-var investigateBtn = document.getElementById('btnInvestigate');
-investigateBtn.addEventListener('click', investigation);
+// Event listner for travel <li>
+myGlobals.travelBtn.addEventListener('click', travel);
 
-// for travel li
-var travelBtn = document.getElementById('btnTravel');
-travelBtn.addEventListener('click', travel);
+// Remove event listener if Travel option is chosen once -- or something that like that
 

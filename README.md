@@ -10,6 +10,8 @@
 # Images
 * Photo by Nik Shuliahin on Unsplash: https://unsplash.com/photos/rkFIIE9PxH0
 * Photo by Ganapathy Kumar on Unsplash: https://unsplash.com/photos/o4ktwpTEQso
+* Photo by John Price on Unsplash: https://unsplash.com/photos/q44sI_C5FtI 
+* Photo by 'Brycethedragon' on Pixabay: https://cdn.pixabay.com/photo/2014/12/11/00/21/sunset-563682_1280.jpg
 # Audio
 * Click.wav by kwahmah_02: https://freesound.org/people/kwahmah_02/sounds/256116/
 
