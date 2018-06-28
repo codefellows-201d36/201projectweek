@@ -113,6 +113,9 @@ var narration = {
   success: 'You caught the suspect!',
   failure: 'You failed to catch the suspect.',
   intro: 'placeholder',
+  siteDialog: {
+
+  }
 };
 
 var logic = {
@@ -284,6 +287,136 @@ selectionOne.addEventListener('click', selection);
 selectionTwo.addEventListener('click', selection);
 selectionThree.addEventListener('click', selection);
 
+
+
+
+/* when the game starts, generate an array of 7 locations. We'll call this the 'Victory path array'. You get a set of clues that point to a location. IF the player goes to the next corresponding index location in the victory path, they are fed another set of pointer clues. */
+
+var centralSeattlePointer = {
+  clue1:`I heard he was trying to find "The Hammering Man".`,
+  clue2:`Sources tell me that he was interested in checking out "Bezo’s Balls".`,
+  clue3:`All I know is that he said he was really hungry and needed to have an amazing view of the Olympic Mountains.`,
+};
+
+var waterFrontPointer = {
+  clue1:`I saw the person you’re looking for an he was obsessed with seeing some flying fish`,
+  clue2:`${Suspects.name} told me that the London Eye was a lot of fun and was on the hunt for something similar.`,
+  clue3:`${Suspects.name}? He’s a huage fan of sea otters. He wants to see a bunch of them in one place.`,
+};
+
+var ballardPointer = {
+  clue1:`Oh yeah, I saw him. He just can’t get enough of seafaring vessels that can move seamlessly from a freshwater lake out to sea.`,
+  clue2:`You’re getting close. I last saw ${Suspects.name} in search of nice beach where he can have a bonfire and drill open a couple of cold ones with the boys.`,
+  clue3:`${Suspects.name} told me he’s a big Norwegian history buff.`,
+}; 
+
+var fremontPointer = {
+  clue1:`The last time I saw ${Suspects.name}, he was trying to take a selfie with a troll and a volkswagen bug.`,
+  clue2:`All I know is that he has an insatiable curiosity about abandon coal gasification plants.`,
+  clue3:`${Suspects.name} deeply misses Harambe. He was last seen trying to find another large gorilla to visit.`,
+};  
+
+var southSeattlePointer = {
+  clue1:`I saw ${Suspects.name}. He said he was going to watch football at Centurylink Stadium`,
+  clue2:`I think I overheard him say he was looking for good Chinese food.`,
+  clue3:`Someone around here was wondering when they could tour The Seattle Underground.`,
+};  
+
+var bellevuePointer = {
+  clue1:`He had tickets to a High School football game.`, 
+  clue2:`${Suspects.name}, you say? He asked me where Laughs Comedy Club was.`, 
+  clue3:`Yes, I overheard him excitedly talking about Botanical Gardens.`,
+};  
+
+var redmondPointer = {
+  clue1:`I talked to ${Suspects.name}. He was in search of a large outdoor park where he could catch a summertime concert without having to drive too far outside of the city.`,
+  clue2:`Stole your Style, did he? I bet he’s off trying to sell it to Bill Gates.`,
+  clue3:`I saw who you’re looking for! He was with some people who were dressed up as a red plumber, a Princess, and a Mushroom who called himself Toad.`,
+};  
+
+var tacomaPointer = {
+  clue1:`${Suspects.name} was heartbroken when Seattle demolished The Kingdome. He’s in search of another Dome, one of the largest in the world.`,
+  clue2:`All of the golf courses in Seattle are too crowded. ${Suspects.name} is hoping to find a large one that is in a nearby city.`,
+  clue3:`${Suspects.name} told me that he wanted to tour a city that was famous for its "aroma", whatever that means…`,
+};  
+
+var leavenworthPointer = {
+  clue1:`Sources tell me that he is a massive fan of Bavarian styled towns where he can catch a good Oktoberfest.`,
+  clue2:`Yeah, I know ${Suspects.name}. He’s obsessed with Bratwurst. If you see him, can you tell him to give me my style back?`,
+  clue3:`You just missed him! I overheard him talking about how he’s always wanted to attend a Christmas Lighting Festival.`,
+};  
+
+var wallaWallaPointer = {
+  clue1:`Tell you what. Last time I saw ${Suspects.name}, he told me his grand plan for teaching HTML/CSS to prison inmates at the 2nd largest prison in the state.`,
+  clue2:`One thing you might not know about ${Suspects.name} is that he’s a oenophile. He’s looking to spend a few days touring the state’s finest vineyards.`,
+  clue3:`I overheard him talking frantically about delicious sweet onions.`,
+};  
+
+var westCoastPointer = {
+  clue1:`Don’t tell anybody, but ${Suspects.name} is a closet Twilight fan. He’s off to go check out some of the locations from the books.`,
+  clue2:`That guy loves natural ocean hot springs.`,
+  clue3:`It’s been a dream of ${Suspects.name}’s to ride a horse on a beach.`, 
+};  
+
+var seaTacTukwillaPointer = {
+  clue1:`The last time I saw ${Suspects.name}, he was looking to book a flight.`,
+  clue2:`Anyone who knows ${Suspects.name} knows that he loves Rocky & Bullwinkle nearly as much as he loves family fun!`,
+  clue3:`You’re getting awfully close. He was last seen looking to buy some new skate shoes at the largest shopping center in the Pacific Northwest.`,
+};  
+
+var uDistrictPointer = {
+  clue1:`Yes, exactly! He was headed off to see a college football game.`,
+  clue2:`After checking out a college football game, ${Suspects.name} wanted to walk over to an outdoor shopping mall.`,
+  clue3:`If there’s one thing I’ll say about ${Suspects.name} is that the dude LOVES cherry blossom trees.`,
+};  
+
+var bellinghamPointer = {
+  clue1:`As a huge Deathcab for Cutie and Postal Service fan, ${Suspects.name} wants to go audit some classes at the same university Ben Gibbard graduated from.`,
+  clue2:`Yes, I spoke to him yesterday. His passport is currently expired but he was hoping he might be able to bribe a Mountie to sneak across.`,
+  clue3:`Snoqualmie and and Steven’s Pass don’t have enough backcountry for ${Suspects.name}. He’s looking to shred a more challenging mountain.`,
+};  
+
+var spokanePointer = {
+  clue1:`He said something about wanting to hit up Hoop Fest.`,
+  clue2:`Can you keep a secret? I heard ${Suspects.name} is looking to go back to college. But he simply must study at one of the 28 member institutions of the Association of Jesuit Colleges and Universities`,
+  clue3:`I couldn’t tell you why, but lately ${Suspects.name} has become obsessed with hanging out in the 2nd largest city in WA state. Weird guy, am I right?`,
+};  
+
+var wrongLocationAnswers = {
+  wrong1:`I’m awfully busy around here. I haven’t seen this ${Suspects.name} character anywhere.`,
+  wrong2:`I’m sorry, I have never seen the person you are looking for.`,
+  wrong3:`I’m not supposed to talk to strangers!`,
+  wrong4:`I have not seen anyone matching that description.`,
+  wrong5:`Can’t talk. I’m late for a very important date.`,
+  wrong6:`What do I look like, Google?`,
+  wrong7:`Why don’t you ask Siri?`,
+  wrong8:`I haven’t seen this ${Suspects.name} character, but do you know anyone who wants to foster a kitten? I found a box full of them this morning and I already have 6 cats.`,
+  wrong9:`Sorry friend, I don’t have time for this. I do CrossFit.`,
+  wron10:`I’ve never seen anyone dressed like that.`,
+  wrong11:`I have no information to give you.`,
+  wrong12:`I wish I had something for you.`,
+  wrong13:`A soccer ball bonked me in the head yesterday. I might have amnesia. Who are you again?`,
+  wrong14:`Actually, I’m new around here. I don’t think I’d be of much help.`,
+  wrong15:`I ate a "medicinal cookie" earlier and I feel strange. What was the question again?`,
+  wrong16:`I’m just about to leave. Can you come back tomorrow?`,
+  wrong17:`Nothing unusual ever happens around here.`,
+}
+
+var npcRoles = [`Tour Guide`,`Foreign Exchange Student`,`Spiritual Leader`,`Photographer`,`Uber Driver`,`Artist`,`Hobo`,`Bus Driver`,`Cyclist`,`Yoga Instructor`,`Hipster`,`A CodeFellow`,`Hotel Manager`,`Reporter`,`Professional`,`Consultant`,`Specialist`,`Jogger`]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // for investigation li
 var investigateBtn = document.getElementById('btnInvestigate');
 investigateBtn.addEventListener('click', investigation);
@@ -291,3 +424,4 @@ investigateBtn.addEventListener('click', investigation);
 // for travel li
 var travelBtn = document.getElementById('btnTravel');
 travelBtn.addEventListener('click', travel);
+
