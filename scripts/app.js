@@ -2,6 +2,9 @@
 'use strict';
 
 // global variables ========================================================================================================
+var sampleOne = document.getElementById('selection1');
+var sampleTwo = document.getElementById('selection2');
+var sampleThree = document.getElementById('selection3');
 var myGlobals = {
   siteSelections: [],
   allSuspects: [],
@@ -9,6 +12,7 @@ var myGlobals = {
   allSites:[],
   allLocations:[],
   allCoordinates:[],
+  locationSelections: [sampleOne, sampleTwo, sampleThree],
 };
 
 // Constructors ============================================================================================================
@@ -119,9 +123,9 @@ var logic = {
   siteTravel: [1, 2, 3],
   finalRound: false,
   nextLocation: '',
+  correctLocation: '',
   currentLocation: '',
   startLocation: '',
-  correctSite: '',
   gameSuspect: '',
   gameScenario: '',
   username: '',
@@ -209,16 +213,31 @@ function renderPage() {
   timestamp.textContent = logic.timeRemaining;
   quit.textContent = 'Quit';
   currentLocationImage.src = logic.currentLocation.cityImage;
-  travelButton.textContent = 'bexos';
-  travelInvestigate.textContent = 'booty';
-  populateSiteSelections();
+  travelButton.textContent = 'Travel';
+  travelInvestigate.textContent = 'Investigate';
+  randomLocations();
+}
+
+function randomLocations() {
+  do {
+    // generate random numbers for indices of allLocations array
+    var randomOne = Math.floor(Math.random() * myGlobals.allLocations.length);
+    var randomTwo = Math.floor(Math.random() * myGlobals.allLocations.length);
+    var randomThree = Math.floor(Math.random() * myGlobals.allLocations.length);
+  } while (randomOne === randomTwo
+    || randomOne === randomThree
+    || randomTwo === randomThree
+    || randomOne === myGlobals.allLocations.indexOf(logic.pathToVictory[0])
+    || randomTwo === myGlobals.allLocations.indexOf(logic.pathToVictory[0])
+    || randomThree === myGlobals.allLocations.indexOf(logic.pathToVictory[0]));
+  myGlobals.locationSelections[0].textContent = myGlobals.allLocations[randomOne].city;
+  myGlobals.locationSelections[1].textContent = myGlobals.allLocations[randomTwo].city;
+  myGlobals.locationSelections[2].textContent = myGlobals.allLocations[randomThree].city;
+  myGlobals.locationSelections[Math.floor(Math.random() * 3)].textContent = logic.pathToVictory[0].city;
 }
 
 // populates the investigation options
 function populateSiteSelections() {
-  var sampleOne = document.getElementById('selection1');
-  var sampleTwo = document.getElementById('selection2');
-  var sampleThree = document.getElementById('selection3');
   sampleOne.textContent = logic.currentLocation.sites.siteOptions[0];
   sampleTwo.textContent = logic.currentLocation.sites.siteOptions[1];
   sampleThree.textContent = logic.currentLocation.sites.siteOptions[2];
@@ -240,16 +259,35 @@ function generateCorrectSite() {
 gameSettings();
 
 // event handlers
+// for selection lis
 function selection(event) {
   console.log('touched');
 }
 
-// event listeners
+// for investigation li
+function investigation(event) {
+  populateSiteSelections();
+  console.log('hello');
+}
+
+// for travel li
+function travel(event) {
+  randomLocations();
+}
+
+// event listeners ===============================================================================
+// for selection lis
 var selectionOne = document.getElementById('selection1');
 var selectionTwo = document.getElementById('selection2');
 var selectionThree = document.getElementById('selection3');
-
 selectionOne.addEventListener('click', selection);
 selectionTwo.addEventListener('click', selection);
 selectionThree.addEventListener('click', selection);
 
+// for investigation li
+var investigateBtn = document.getElementById('btnInvestigate');
+investigateBtn.addEventListener('click', investigation);
+
+// for travel li
+var travelBtn = document.getElementById('btnTravel');
+travelBtn.addEventListener('click', travel);
