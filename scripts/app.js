@@ -11,6 +11,8 @@ var myGlobals = {
   allScenarios: [],
   allSites:[],
   allLocations:[],
+  allQuestions: [],
+  currentQuestions: [], // maps questions to sites for current round
   allCoordinates:[],
   locationSelections: [sampleOne, sampleTwo, sampleThree],
 };
@@ -37,9 +39,9 @@ var Locations = function(city, coordinates, fact, cityImage, sites, questions) {
   this.hasBeenUsed = false;
   myGlobals.allLocations.push(this);
 };
-var SiteOptions = function(siteOptions, siteImages){
+var SiteOptions = function(siteOptions, siteQuestions){
   this.siteOptions = siteOptions;
-  this.siteImages = siteImages;
+  this.siteQuestions = siteQuestions;
   myGlobals.allSites.push(this);
 };
 var Coordinates = function(x,y){
@@ -58,21 +60,21 @@ new Heists(' stole all the CSS in the land!');
 // new Heists(' stole my lunch money!');
 
 // sites =========================================================
-new SiteOptions (['Seattle Art Museum','Amazon','Space Needle'],['random image','random image','random image']);//[0]
-new SiteOptions(['Pike Place','Ferris Wheel', 'Seattle Aquarium'],['random image','random image','random image']);//[1]
-new SiteOptions(['Ballard Locks','Golden Gardens','Norweigan Museum'],['random image','random image','random image']);//[2]
-new SiteOptions(['Troll', 'Gas Works Park','Woodlands Park Zoo'],['random image','random image','random image']);//[3]
-new SiteOptions(['Century Link Field','International District','Safeco Field'],['random image','random image','random image']);//[4]
-new SiteOptions(['Bellevue Square','Botanical Gardens','Bellevue High School'],['random image','random image','random image']);//[5]
-new SiteOptions(['Marymoor Park','Microsoft','Nintendo'],['random image','random image','random image']);//[6]
-new SiteOptions(['Tacoma Dome','Chambers Bay','Tacoma Narrows Bridge'],['random image','random image','random image']);//[7]
-new SiteOptions(['Oktoberfest','Brats','Christmas Time'],['random image','random image','random image']);//[8]
-new SiteOptions(['Penitentiary','Sweet Onions','Wine Country'],['random image','random image','random image']);//[9]
-new SiteOptions(['Forks','Long Beach', 'Ocean Shores'],['random image','random image','random image']);//[10]
-new SiteOptions(['Family Fun Center','Airport','Southcenter Mall'],['random image','random image','random image']);//[11]
-new SiteOptions(['Husky Stadium','University Village','Cherry Blossom Trees'],['random image','random image','random image']);//[12]
-new SiteOptions(['Western Washington University','Canadian Border','Mount Baker'],['random image','random image','random image']);//[13]
-new SiteOptions(['Hoop Fest','Gonzaga','Spokane Falls'],['random image','random image','random image']);//[14]
+new SiteOptions (['Seattle Art Museum','Amazon','Space Needle'], ['q1', 'q2', 'q3']);//[0]
+new SiteOptions(['Pike Place','Ferris Wheel', 'Seattle Aquarium'],['q1', 'q2', 'q3']);//[1]
+new SiteOptions(['Ballard Locks','Golden Gardens','Norweigan Museum'],['q1', 'q2', 'q3']);//[2]
+new SiteOptions(['Troll', 'Gas Works Park','Woodlands Park Zoo'], ['q1', 'q2', 'q3']);//[3]
+new SiteOptions(['Century Link Field','International District','Safeco Field'],['q1', 'q2', 'q3']);//[4]
+new SiteOptions(['Bellevue Square','Botanical Gardens','Bellevue High School'],['q1', 'q2', 'q3']);//[5]
+new SiteOptions(['Marymoor Park','Microsoft','Nintendo'],['q1', 'q2', 'q3']);//[6]
+new SiteOptions(['Tacoma Dome','Chambers Bay','Tacoma Narrows Bridge'],['q1', 'q2', 'q3']);//[7]
+new SiteOptions(['Oktoberfest','Brats','Christmas Time'],['q1', 'q2', 'q3']);//[8]
+new SiteOptions(['Penitentiary','Sweet Onions','Wine Country'],['q1', 'q2', 'q3']);//[9]
+new SiteOptions(['Forks','Long Beach', 'Ocean Shores'],['q1', 'q2', 'q3']);//[10]
+new SiteOptions(['Family Fun Center','Airport','Southcenter Mall'],['q1', 'q2', 'q3']);//[11]
+new SiteOptions(['Husky Stadium','University Village','Cherry Blossom Trees'],['q1', 'q2', 'q3']);//[12]
+new SiteOptions(['Western Washington University','Canadian Border','Mount Baker'],['q1', 'q2', 'q3']);//[13]
+new SiteOptions(['Hoop Fest','Gonzaga','Spokane Falls'],['q1', 'q2', 'q3']);//[14]
 
 //Locations ==============================================================================
 new Locations('Central Seattle',myGlobals.allCoordinates[0],'fact','img',myGlobals.allSites[0],'question'); //[0]
@@ -129,6 +131,7 @@ var logic = {
   gameSuspect: '',
   gameScenario: '',
   username: '',
+  correctQuestion: '',
 };
 
 // execution ===================================================================================================================
@@ -165,6 +168,7 @@ var gameSettings = function() {
   logic.currentLocation = (myGlobals.allLocations[generateGameStartLocation]);
   myGlobals.allLocations[generateGameStartLocation].hasBeenUsed = true;
   generateGameNextLocation();
+  logic.correctLocation = logic.pathToVictory[0].city;
 };
 
 // generates next location
@@ -196,12 +200,18 @@ function clearNode(myId) {
   }
 }
 
+function setQuestions() {
+  // get questions and sites
+  // map together and push into current questions array
+}
+
 function renderPage() {
   // display current location
   var currentGameLocation = document.getElementById('myLocation');
   currentGameLocation.textContent = logic.currentLocation.city;
   // retrieve next location (in advance)
   logic.nextLocation = logic.pathToVictory[1];
+  setQuestions();
   // populate page nodes
   var quit = document.getElementById('userQuit');
   var timestamp = document.getElementById('myTimestamp');
@@ -209,12 +219,14 @@ function renderPage() {
   var currentLocationImage = document.getElementById('locationImage');
   var travelButton = document.getElementById('btnTravel');
   var travelInvestigate = document.getElementById('btnInvestigate');
-  siteHeading.textContent = logic.currentLocation.city;
-  timestamp.textContent = logic.timeRemaining;
-  quit.textContent = 'Quit';
+  var descriptionText = document.getElementById('myText');
+  siteHeading.textContent = 'Location: ' + logic.currentLocation.city;
+  timestamp.textContent = 'Time: ' + logic.timeRemaining + ' Hours Remaining';
+  quit.textContent = 'Leave Game';
   currentLocationImage.src = logic.currentLocation.cityImage;
   travelButton.textContent = 'Travel';
   travelInvestigate.textContent = 'Investigate';
+  descriptionText.textContent = logic.correctQuestion;
   randomLocations();
 }
 
@@ -238,9 +250,12 @@ function randomLocations() {
 
 // populates the investigation options
 function populateSiteSelections() {
-  sampleOne.textContent = logic.currentLocation.sites.siteOptions[0];
-  sampleTwo.textContent = logic.currentLocation.sites.siteOptions[1];
-  sampleThree.textContent = logic.currentLocation.sites.siteOptions[2];
+  var site1 = logic.currentLocation.sites.siteOptions[0];
+  var site2 = logic.currentLocation.sites.siteOptions[1];
+  var site3 = logic.currentLocation.sites.siteOptions[2];
+  sampleOne.textContent = site1;
+  sampleTwo.textContent = site2;
+  sampleThree.textContent = site3;
 }
 
 function resetPage() {
@@ -250,18 +265,25 @@ function resetPage() {
   renderPage();
 }
 
-// generates the correct site
-function generateCorrectSite() {
-  logic.correctSite = logic.pathToVictory[0].sites.siteOptions[Math.floor(Math.random() * 3)];
-  console.log(logic.correctSite);
-}
-
-gameSettings();
+// // generates the correct site
+// function generateCorrectSite() {
+//   var correctIndex = Math.floor(Math.random() * 3);
+//   logic.correctSite = logic.pathToVictory[0].sites.siteOptions[correctIndex];
+//   logic.correctQuestion = logic.pathToVictory[0].sites.siteQuestions[correctIndex];
+//   console.log(logic.correctSite + ' ' + logic.correctQuestion);
+// }
 
 // event handlers
 // for selection lis
 function selection(event) {
-  console.log('touched');
+  if (event.target.textContent === logic.correctSite) {
+    
+    console.log(logic.playerProgress);
+  }
+}
+
+function populateSelectionSites() {
+  if (event.target.textContent === )
 }
 
 // for investigation li
@@ -291,3 +313,8 @@ investigateBtn.addEventListener('click', investigation);
 // for travel li
 var travelBtn = document.getElementById('btnTravel');
 travelBtn.addEventListener('click', travel);
+
+// function execution
+gameSettings();
+renderPage();
+generateCorrectSite();
