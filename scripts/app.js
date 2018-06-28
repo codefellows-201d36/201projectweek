@@ -216,7 +216,6 @@ function renderPage() {
   travelButton.textContent = 'Travel';
   travelInvestigate.textContent = 'Investigate';
   randomLocations();
-  removeDupeCorrect();
 }
 
 function randomLocations() {
@@ -225,42 +224,23 @@ function randomLocations() {
     var randomOne = Math.floor(Math.random() * myGlobals.allLocations.length);
     var randomTwo = Math.floor(Math.random() * myGlobals.allLocations.length);
     var randomThree = Math.floor(Math.random() * myGlobals.allLocations.length);
-    console.log(randomOne, randomTwo, randomThree);
   } while (randomOne === randomTwo
     || randomOne === randomThree
     || randomTwo === randomThree
-    || myGlobals.locationSelections.includes(logic.pathToVictory[0].city));
+    || randomOne === myGlobals.allLocations.indexOf(logic.pathToVictory[0])
+    || randomTwo === myGlobals.allLocations.indexOf(logic.pathToVictory[0])
+    || randomThree === myGlobals.allLocations.indexOf(logic.pathToVictory[0]));
   myGlobals.locationSelections[0].textContent = myGlobals.allLocations[randomOne].city;
   myGlobals.locationSelections[1].textContent = myGlobals.allLocations[randomTwo].city;
   myGlobals.locationSelections[2].textContent = myGlobals.allLocations[randomThree].city;
-} 
-
-function removeDupeCorrect() {
-  if (myGlobals.locationSelections.includes(logic.pathToVictory[0].city)) {
-    console.log('good to go');
-    console.log(myGlobals.indexOf(logic.pathToVictory[0].city));
-  } else {
-    var indexOfDupe = myGlobals.locationSelections.indexOf(logic.pathToVictory[0].city);
-    console.log(indexOfDupe);
-    myGlobals.locationSelections[indexOfDupe].textContent = logic.pathToVictory[0].city;
-  }
+  myGlobals.locationSelections[Math.floor(Math.random() * 3)].textContent = logic.pathToVictory[0].city;
 }
-
-// function removeDuplicateSelections() {
-//   do {
-//     populateLocationSelections();
-//   } while (myGlobals.locationSelections[0] === myGlobals.locationSelections[1]
-//       || myGlobals.locationSelections[0] === myGlobals.locationSelections[2]
-//       || myGlobals.locationSelections[1] === myGlobals.locationSelections[2]
-//       || myGlobals.locationSelections.includes(logic.pathToVictory[0].city));
-// }
-
 
 // populates the investigation options
 function populateSiteSelections() {
-  myGlobals.sampleOne.textContent = logic.currentLocation.sites.siteOptions[0];
-  myGlobals.sampleTwo.textContent = logic.currentLocation.sites.siteOptions[1];
-  myGlobals.sampleThree.textContent = logic.currentLocation.sites.siteOptions[2];
+  sampleOne.textContent = logic.currentLocation.sites.siteOptions[0];
+  sampleTwo.textContent = logic.currentLocation.sites.siteOptions[1];
+  sampleThree.textContent = logic.currentLocation.sites.siteOptions[2];
 }
 
 function resetPage() {
@@ -290,6 +270,11 @@ function investigation(event) {
   console.log('hello');
 }
 
+// for travel li
+function travel(event) {
+  randomLocations();
+}
+
 // event listeners ===============================================================================
 // for selection lis
 var selectionOne = document.getElementById('selection1');
@@ -304,3 +289,5 @@ var investigateBtn = document.getElementById('btnInvestigate');
 investigateBtn.addEventListener('click', investigation);
 
 // for travel li
+var travelBtn = document.getElementById('btnTravel');
+travelBtn.addEventListener('click', travel);
