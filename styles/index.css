@@ -1,0 +1,33 @@
+/* Styles go here! */
+body {
+  background-image: linear-gradient(
+    rgba(212, 255, 195, 0.8), 
+    rgba(212, 255, 195, 0.8)
+  ), url(../img/home.jpg);
+  background-size: cover;
+}
+
+header {
+  outline: 4px dashed yellow;
+  /* width: 100%; */
+}
+
+.logo {
+  outline: 4px dashed orange;
+  position: relative;
+}
+
+img {
+  outline: 4px dashed green;
+  position: absolute;
+  width: 10%;
+  width: 10%;
+  filter: grayscale(100%);
+}
+
+h1 {
+  outline: 4px dashed blue;
+  position: absolute;
+  display: block;
+  float: left;
+}
