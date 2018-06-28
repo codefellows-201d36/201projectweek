@@ -4,48 +4,196 @@ DESCRIPTION:  Styles the game.html page
 NOTES:        Pages uses JavaScript to generate/redraw text
 */
 
+/****** Global Styling ******/
+body a:link    { color: #0db14b; text-decoration: none; }
+body a:visited { color: #0db14b; text-decoration: none; }
+body a:hover   { color: #0b7210; text-decoration: none; }
+body a:active  { color: #ffffff; text-decoration: none; }
+
 /****** Viewport ******/
 .viewport {
   margin: 0 auto;
   width:95%;
-  /* height: 95%; */
-  /* max-width:960px; */
+  height: 95vh;
   display: grid;
   grid-template-columns: 75% 25%;
-  grid-template-rows: 10% 70% 20%;
+  grid-template-rows: 5% 75% 20%;
+  grid-gap: 15px;
   background-color: #fff;
   color: #444;
-  margin-bottom:5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 20px;
+  font-weight: bold;
 }
 
-/****** Grid ******/
+/****** Grid Setup ******/
 .a1 {
   grid-column: 1 / 2;
-  outline: 4px dashed blue;
+  background-color: #ddd;
+  border-radius: 15px; 
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* outline: 4px dashed blue; */
 }
 .b1 {
   grid-column: 2/3;
-  outline: 4px dashed orange;
+  background-color: #444;
+  color: #eee;
+  border-radius: 15px; 
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* outline: 4px dashed orange; */
 }
 .a2 {
   grid-column: 1 / 2;
-  outline: 4px dashed blue;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 2px dashed #eee; */
+  /* border-radius: 15px; */
+  /* outline: 4px dashed blue; */
 }
 .b2 {
   grid-column: 2/3;
-  outline: 4px dashed orange;
+  background-color: #444;
+  color: #eee;
+  border-radius: 15px; 
+  font-weight: normal;
+  /* outline: 4px dashed orange; */
 }
 .a3 {
   grid-column: 1 / 2;
-  outline: 4px dashed blue;
+  background-color: #ddd;
+  border-radius: 15px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* outline: 4px dashed blue; */
 }
 .b3 {
   grid-column: 2/3;
-  outline: 4px dashed orange;
+  background-color: #444;
+  border-radius: 15px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 20px;
+  font-weight: normal;
+  /* outline: 4px dashed orange; */
 }
 
-/****** Additional Styling ******/
-.a2 > img {
-  min-width: 100%; 
-  height: auto;
+
+/****** Row-1 Styling ******/
+.a1 ul {
+  width: 100%;
+  text-align: center;
+  /* border: 2px dashed green; */
 }
+.a1 li {
+  display: inline-block;
+  margin-right: 20%;
+  /* border: 2px dashed blue; */
+}
+.a1 li:last-child {
+  margin-right: 0;
+}
+.b1 {
+  display: flex;
+  /* justify-content: center; */
+}
+.b1 h1 {
+  margin: 0 auto;
+}
+
+
+/****** Row-2 Styling ******/
+.a2 {
+  position: relative;
+}
+.a2 > img {
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 15px;
+}
+.b2 {
+  padding: 25px;
+}
+
+.b2 p {
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+
+/****** Row-3 Styling ******/
+.a3 {
+  /* outline: 4px dashed orange; */
+}
+.a3 .buttons {
+  /* outline: 4px dashed blue; */
+  position: relative;
+  float: left;
+}
+.a3 .travel, .a3 .investigate {
+  border: none;
+  background-color: #444;
+  color: #fff;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 20px;
+  margin-right: 100px;
+  border-radius: 50px;
+  text-transform: uppercase;
+}
+.a3 .investigate { margin-right: 0;}
+.a3 .travel:focus, .a3 .investigate:focus { background-color: #0db14b; font-weight: bold; outline: none;}
+.a3 .travel:hover, .a3 .investigate:hover { font-weight: bold; }
+.a3 .travel:active, .a3 .investigate:active { background-color: #888;}
+.a3 .travel      { padding: 25px 70px; }
+.a3 .investigate { padding: 25px 40px; }
+
+.b3 {
+  /* margin: 0 auto; */
+  line-height: 1.5;
+  color: #fff;
+  text-transform: uppercase;
+}
+/* .b3 ol:hover { font-weight: bold; } */
+
+/****** Responsive Scaling ******/
+@media only screen and (max-width: 1600px) {
+  .a1 li {
+    margin-right: 10%;
+  }
+}
+@media only screen and (max-width: 1400px) {
+  .a1 li {
+    margin-right: 3%;
+  }
+}
+/* @media only screen and (max-width: 1400px) {
+  .a3 li {
+    margin-right: 15px;
+  }
+} */
+
+/****** Animation Effects ******/
+/* Typing effect */
+/* @keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+} */
+
+/* Cursor effect */
+/* @keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange; }
+} */
