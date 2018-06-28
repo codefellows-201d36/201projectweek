@@ -65,6 +65,7 @@ body a:active  { color: #ffffff; text-decoration: none; }
   background-color: #444;
   color: #eee;
   border-radius: 15px; 
+  font-weight: normal;
   /* outline: 4px dashed orange; */
 }
 .a3 {
@@ -85,6 +86,7 @@ body a:active  { color: #ffffff; text-decoration: none; }
   align-items: center;
   text-align: center;
   font-size: 20px;
+  font-weight: normal;
   /* outline: 4px dashed orange; */
 }
 
@@ -158,15 +160,13 @@ body a:active  { color: #ffffff; text-decoration: none; }
 .a3 .travel      { padding: 25px 70px; }
 .a3 .investigate { padding: 25px 40px; }
 
-
-
 .b3 {
   /* margin: 0 auto; */
   line-height: 1.5;
   color: #fff;
   text-transform: uppercase;
 }
-
+/* .b3 ol:hover { font-weight: bold; } */
 
 /****** Responsive Scaling ******/
 @media only screen and (max-width: 1600px) {
@@ -179,7 +179,11 @@ body a:active  { color: #ffffff; text-decoration: none; }
     margin-right: 3%;
   }
 }
-
+/* @media only screen and (max-width: 1400px) {
+  .a3 li {
+    margin-right: 15px;
+  }
+} */
 
 /****** Animation Effects ******/
 /* Typing effect */

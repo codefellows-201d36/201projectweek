@@ -1,36 +1,47 @@
 /* Styles go here! */
 body {
-  background-image: url(../img/home.jpg);
+  background: url(../img/home.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
 }
 
-.wrapper {
+header {
   position: fixed;
   top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-
-header {
-  outline: 4px dashed yellow;
+  width: 960px;
+  height: 200px;
+  outline: 4px dashed magenta;
 }
 
 .logo {
   outline: 4px dashed orange;
   position: relative;
+  /* margin-bottom: 100px; */
+  height: 100px;
 }
 
-img {
+.logo img {
   outline: 4px dashed green;
-  position: absolute;
-  width: 10%;
-  width: 10%;
-  filter: grayscale(100%);
+  float: left;
+  width: 140px;
+}
+.logo h1 {
+  outline: 4px dashed blue;
+  float: left;
+  width: 775px;
+  margin-left: 25px;
+  font-size: 48px;
+  font-family: 'Courier New', Courier, monospace;
 }
 
-h1 {
-  outline: 4px dashed blue;
-  position: absolute;
-  display: block;
-  float: left;
+nav ul {
+
+}
+nav li {
+  list-style-type: none;
+  display: inline-block;
 }
