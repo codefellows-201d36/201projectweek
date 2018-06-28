@@ -13,7 +13,7 @@ body a:active  { color: #ffffff; text-decoration: none; }
 /****** Viewport ******/
 .viewport {
   margin: 0 auto;
-  width:95%;
+  width: 95%;
   height: 95vh;
   display: grid;
   grid-template-columns: 75% 25%;

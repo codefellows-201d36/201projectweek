@@ -1,4 +1,10 @@
-/* Styles go here! */
+/* 
+PROJECT:      201 Project Week
+DESCRIPTION:  Styles the index.html page
+NOTES:        None
+*/
+
+/****** Global Styling ******/
 body {
   background: url(../img/home.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;

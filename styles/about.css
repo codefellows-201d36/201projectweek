@@ -1,1 +1,70 @@
-/* Styles go here! */
+/* 
+PROJECT:      201 Project Week
+DESCRIPTION:  Styles the about.html page
+NOTES:        None
+*/
+
+/****** Global Styling ******/
+body a:link    { color: #0db14b; text-decoration: none; }
+body a:visited { color: #0db14b; text-decoration: none; }
+body a:hover   { color: #0b7210; text-decoration: none; }
+body a:active  { color: #ffffff; text-decoration: none; }
+
+/****** Viewport ******/
+.viewport {
+  margin: 0 auto;
+  width: 85%;
+  display: grid;
+  grid-template-columns: 33% 34% 33;
+  grid-template-rows: 50% 50%;
+  grid-gap: 25px;
+  background-color: #fff;
+  color: #444;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+.a1 {
+  grid-column: 1 / 2;
+}
+.b1 {
+  grid-column: 2 / 3;
+}
+.c1 {
+  grid-column: 3 / 4;
+}
+.a2 {
+  grid-column: 1 / 2;
+}
+.b2 {
+  grid-column: 2 / 3;
+}
+.c2 {
+  grid-column: 3 / 4;
+}
+
+/****** Additional Styles ******/
+header h1 {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 26px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+img {
+  width: 150px;
+  height: 150px;
+  border-radius: 15px;
+}
+li {
+  /* display: inline-block; */
+  /* margin-right: 15px; */
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+}
+div > h1 {
+  font-size: 20px;
+  font-weight: bold;
+}
+p {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+}
