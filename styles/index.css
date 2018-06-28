@@ -1,15 +1,18 @@
 /* Styles go here! */
 body {
-  background-image: linear-gradient(
-    rgba(212, 255, 195, 0.8), 
-    rgba(212, 255, 195, 0.8)
-  ), url(../img/home.jpg);
+  background-image: url(../img/home.jpg);
   background-size: cover;
+}
+
+.wrapper {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 header {
   outline: 4px dashed yellow;
-  /* width: 100%; */
 }
 
 .logo {

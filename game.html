@@ -12,33 +12,38 @@
 </head>
 <body>
   <section class="wrapper viewport">
+    <!-- Row 1 -->
     <div class="box a1 overlay">
       <ul>
-        <li class="location" id="myLocation">Location</li>
-        <li class="quit" id="userQuit">Quit</li>
-        <li class="timestamp" id="myTimestamp">Monday, 13:00</li>
+        <li class="location" id="myLocation">Location: Seattle, WA</li>
+        <li class="timestamp" id="myTimestamp">Time Remaining: 13 hours</li>
+        <li id="userQuit"><a href="index.html" class="quit">Leave Game</a></li>
       </ul>
     </div>
     <div class="box b1 heading">
-      <h1 id="myHeading">Subject Heading Here</h1>
+      <h1 id="myHeading">Where to next?</h1>
     </div>
 
+    <!-- Row 2 -->
     <div class="box a2 image">
-      <img src="http://via.placeholder.com/120x180" alt="Location" id="locationImage">
+      <img src="img/anacortes-0.jpg" alt="Location" id="locationImage">
     </div>
     <div class="box b2 description">
-      <p id="myText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis suscipit, fugit laudantium sint laboriosam aspernatur possimus commodi reprehenderit soluta ea repellendus assumenda reiciendis adipisci architecto eaque odit nostrum. Temporibus, debitis.</p>
+      <p id="myText">He said he was thinking about attending a Mariner's game. I told them they hadn't been playing well since 2001. He started calling me "Fairweather" after that. No idea why. It was raining at the time. ¯\_(ツ)_/¯</p>
     </div>
 
+    <!-- Row 3 -->
     <div class="box a3">
-      <button class="travel" id="btnTravel">Travel</button>
-      <button class="investigate" id="btnInvestigate">Investigate</button>
+      <div class="buttons">
+        <button class="travel" id="btnTravel">Travel</button>
+        <button class="investigate" id="btnInvestigate">Investigate</button>
+      </div>
     </div>
     <div class="box b3">
       <ol id="myOptions">
-        <li>Sample 1</li>
-        <li>Sample 2</li>
-        <li>Sample 3</li>
+        <li>Space Needle</li>
+        <li><a href="">Pike's Place Market</a></li>
+        <li><a href="">Safeco Field</a></li>
       </ul>
     </div>
   </section>
