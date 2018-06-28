@@ -8,11 +8,11 @@ NOTES:        Pages uses JavaScript to generate/redraw text
 .viewport {
   margin: 0 auto;
   width:95%;
-  /* height: 95%; */
-  /* max-width:960px; */
+  height: 95vh;
   display: grid;
   grid-template-columns: 75% 25%;
-  grid-template-rows: 10% 70% 20%;
+  grid-template-rows: 5% 75% 20%;
+  grid-gap: 15px;
   background-color: #fff;
   color: #444;
   margin-bottom:5px;
@@ -45,7 +45,7 @@ NOTES:        Pages uses JavaScript to generate/redraw text
 }
 
 /****** Additional Styling ******/
-.a2 > img {
+/* .a2 > img {
   min-width: 100%; 
   height: auto;
-}
+} */
