@@ -309,7 +309,7 @@ var universityDistrictFact = {
 };
 
 var bellinghamFact = {
-  'George Vancouver named "Bellingham" after a member of the British Royal Navy, Sir William Bellingham.'
+  'George Vancouver named "Bellingham" after a member of the British Royal Navy, Sir William Bellingham, after his visit to the area.'
 };
 
 var spokaneFact = {
