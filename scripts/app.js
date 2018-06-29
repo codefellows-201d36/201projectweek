@@ -6,6 +6,7 @@
 // =========================================================================================================================
 var myGlobals = {
   siteSelections: [],
+  locationArr: [],
   allSuspects: [],
   allScenarios: [],
   allSites:[],
@@ -15,6 +16,7 @@ var myGlobals = {
   selection1: document.getElementById('selection1'),
   selection2: document.getElementById('selection2'),
   selection3: document.getElementById('selection3'),
+  dynamicText: document.getElementById('myText'),
   investigateBtn: document.getElementById('btnInvestigate'),
   travelBtn: document.getElementById('btnTravel'),
 };
@@ -280,10 +282,12 @@ function renderPage() {
   currentGameLocationElement.textContent = logic.currentLocation.city;
 
   // retrieve next location (and remove value from pathToVictory)
-  for (var next; next < logic.pathToVictory; next++) {
-    logic.nextLocation = logic.pathToVictory[next];
-    logic.pathToVictory.splice(next, 1);
-  }
+  // for (var i=0; i < logic.pathToVictory.length; i++) {
+  //   logic.nextLocation = logic.pathToVictory[i];
+  //   // logic.pathToVictory.splice(0, 1);
+  // }
+
+  logic.nextLocation = logic.pathToVictory[1];
 
   // Prepare page nodes
   var quit = document.getElementById('userQuit');
@@ -305,6 +309,19 @@ function renderPage() {
   myLocation.textContent = 'Location: ' + logic.currentLocation.city;
   myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
   randomLocations();
+}
+
+function rerenderPageNodes() {
+  var timestamp = document.getElementById('myTimestamp');
+  var siteHeading = document.getElementById('myHeading');
+  var myLocation = document.getElementById('myLocation');
+  var myTimeStamp = document.getElementById('myTimestamp');
+  var currentLocationImage = document.getElementById('locationImage');
+  siteHeading.textContent = logic.currentLocation.city;
+  currentLocationImage.src = logic.currentLocation.cityImage;
+  timestamp.textContent = logic.timeRemaining;
+  myLocation.textContent = 'Location: ' + logic.currentLocation.city;
+  myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
 }
 
 // generates next location
@@ -335,9 +352,14 @@ function randomLocations() {
     || randomTwo === myGlobals.allLocations.indexOf(logic.pathToVictory[0])
     || randomThree === myGlobals.allLocations.indexOf(logic.pathToVictory[0]));
   myGlobals.locationSelections[0].textContent = myGlobals.allLocations[randomOne].city;
+  myGlobals.locationArr[0] = myGlobals.allLocations[randomOne];
   myGlobals.locationSelections[1].textContent = myGlobals.allLocations[randomTwo].city;
+  myGlobals.locationArr[1] = myGlobals.allLocations[randomTwo];
   myGlobals.locationSelections[2].textContent = myGlobals.allLocations[randomThree].city;
-  myGlobals.locationSelections[Math.floor(Math.random() * 3)].textContent = logic.pathToVictory[0].city;
+  myGlobals.locationArr[2] = myGlobals.allLocations[randomThree];
+  var pathToVictoryIndex = Math.floor(Math.random() * 3);
+  myGlobals.locationSelections[pathToVictoryIndex].textContent = logic.pathToVictory[0].city;
+  myGlobals.locationArr[pathToVictoryIndex] = logic.pathToVictory[0];
 }
 
 // rerender node
@@ -372,29 +394,69 @@ function populateSiteSelections() {
   myGlobals.selection3.textContent = logic.currentLocation.sites.siteOptions[2];
 }
 
-// generates the correct site
-function generateCorrectSite() {
-  logic.correctSite = logic.pathToVictory[0].sites.siteOptions[Math.floor(Math.random() * 3)];
-  console.log(logic.correctSite);
+function populateSiteSelectionsClick0() {
+  myGlobals.selection1.textContent = myGlobals.locationArr[0].sites.siteOptions[0];
+  myGlobals.selection2.textContent = myGlobals.locationArr[0].sites.siteOptions[1];
+  myGlobals.selection3.textContent = myGlobals.locationArr[0].sites.siteOptions[2];
+  logic.currentLocation = myGlobals.locationArr[0];
+  rerenderPageNodes();
 }
+
+
+// // generates the correct site
+// function generateCorrectSite() {
+//   logic.correctSite = logic.pathToVictory[0].sites.siteOptions[Math.floor(Math.random() * 3)];
+//   console.log(logic.correctSite);
+// }
 
 // =========================================================================================================================
 // Event Handlers
 // =========================================================================================================================
 // for selection <li>'s
 function selection(event) {
-  console.log('touched');
+  if (event.target.classList[0] === 'siteNavigation1') {
+    if (myGlobals.currentLocation === myGlobals.correctLocation) {
+      myGlobals.dynamicText.textContent = logic.nextLocation.questions[0];
+    } else {
+      myGlobals.dynamicText.textContent = 'wrongo bucky';
+    }
+  } else if (event.target.classList[0] === 'siteNavigation2') {
+    if (myGlobals.currentLocation === myGlobals.correctLocation) {
+      myGlobals.dynamicText.textContent = logic.nextLocation.questions[1];
+    } else {
+      myGlobals.dynamicText.textContent = 'wrongo bucky';
+    }
+  } else if (event.target.classList[0] === 'siteNavigation3') {
+    if (myGlobals.currentLocation === myGlobals.correctLocation) {
+      myGlobals.dynamicText.textContent = logic.nextLocation.questions[0];
+    } else {
+      myGlobals.dynamicText.textContent = 'wrongo bucky';
+    }
+  } else if (event.target.classList[0] === 'travelNavigation1') {
+    populateSiteSelectionsClick0();
+  }
 }
 
 // for investigation <li>
 function investigation(event) {
   populateSiteSelections();
-  console.log('hello');
+  myGlobals.selection1.classList.remove('travelNavigation1');
+  myGlobals.selection2.classList.remove('travelNavigation2');
+  myGlobals.selection3.classList.remove('travelNavigation3');
+  myGlobals.selection1.classList.add('siteNavigation1');
+  myGlobals.selection2.classList.add('siteNavigation2');
+  myGlobals.selection3.classList.add('siteNavigation3');
 }
 
 // for travel <li>
 function travel(event) {
   randomLocations();
+  myGlobals.selection1.classList.remove('siteNavigation1');
+  myGlobals.selection2.classList.remove('siteNavigation2');
+  myGlobals.selection3.classList.remove('siteNavigation3');
+  myGlobals.selection1.classList.add('travelNavigation1');
+  myGlobals.selection2.classList.add('travelNavigation2');
+  myGlobals.selection3.classList.add('travelNavigation3');
 }
 
 // =========================================================================================================================
@@ -415,4 +477,3 @@ myGlobals.investigateBtn.addEventListener('click', investigation);
 myGlobals.travelBtn.addEventListener('click', travel);
 
 // Remove event listener if Travel option is chosen once -- or something that like that
-
