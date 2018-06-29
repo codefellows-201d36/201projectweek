@@ -12,14 +12,19 @@ var myGlobals = {
   allSites:[],
   allLocations:[],
   allCoordinates:[],
-  locationSelections: [myGlobals.selection1, myGlobals.selection2, myGlobals.selection3],
   selection1: document.getElementById('selection1'),
   selection2: document.getElementById('selection2'),
   selection3: document.getElementById('selection3'),
+  // locationSelections: [[myGlobals.selection1, myGlobals.selection2, myGlobals.selection3],]
+  locationSelections: [],
   dynamicText: document.getElementById('myText'),
   investigateBtn: document.getElementById('btnInvestigate'),
   travelBtn: document.getElementById('btnTravel'),
 };
+
+myGlobals.locationSelections.push(myGlobals.selection1);
+myGlobals.locationSelections.push(myGlobals.selection2);
+myGlobals.locationSelections.push(myGlobals.selection3);
 
 var logic = {
   cluesNeededToWin: 7,
@@ -61,7 +66,6 @@ var Heists = function(scenario) {
   this.scenario = scenario;
   myGlobals.allScenarios.push(this);
 };
-
 
 var SiteOptions = function(siteOptions, siteImages){
   this.siteOptions = siteOptions;
@@ -148,14 +152,14 @@ var narration = {
 
 var centralSeattlePointer = {
   clue1:`I heard he was trying to find "The Hammering Man".`,
-  clue2:`Sources tell me that he was interested in checking out "Bezo’s Balls".`,
+  clue2:`Sources tell me that he was interested in checking out "Bezos' Balls".`,
   clue3:`All I know is that he said he was really hungry and needed to have an amazing view of the Olympic Mountains.`,
 };
 
 var waterFrontPointer = {
-  clue1:`I saw the person you’re looking for an he was obsessed with seeing some flying fish`,
+  clue1:`I saw the person you’re looking for and he was obsessed with seeing some flying fish`,
   clue2:`${Suspects.name} told me that the London Eye was a lot of fun and was on the hunt for something similar.`,
-  clue3:`${Suspects.name}? He’s a huage fan of sea otters. He wants to see a bunch of them in one place.`,
+  clue3:`${Suspects.name}? He’s a huge fan of sea otters. He wants to see a bunch of them in one place.`,
 };
 
 var ballardPointer = {
@@ -166,7 +170,7 @@ var ballardPointer = {
 
 var fremontPointer = {
   clue1:`The last time I saw ${Suspects.name}, he was trying to take a selfie with a troll and a volkswagen bug.`,
-  clue2:`All I know is that he has an insatiable curiosity about abandon coal gasification plants.`,
+  clue2:`All I know is that he has an insatiable curiosity about abandoned coal gasification plants.`,
   clue3:`${Suspects.name} deeply misses Harambe. He was last seen trying to find another large gorilla to visit.`,
 };
 
@@ -380,12 +384,21 @@ Math.getDistance = function(x1, y1, x2, y2) {
 };
 
 // clears the page nodes
+<<<<<<< Updated upstream
 function clearNode(myId) {
   var node = document.getElementById(myId);
   while (node.hasChildNodes()) {
     node.removeChild(node.firstChild);
   }
 }
+=======
+// function clearNode(myId) {
+//   var node = document.getElementById(myId);
+//   while (node.hasChildNodes()) {
+//     node.removeChild(node.firstChild);
+//   }
+// }
+>>>>>>> Stashed changes
 
 // populates the investigation options
 function populateSiteSelections() {
@@ -402,6 +415,24 @@ function populateSiteSelectionsClick0() {
   rerenderPageNodes();
 }
 
+<<<<<<< Updated upstream
+=======
+function populateSiteSelectionsClick1() {
+  myGlobals.selection1.textContent = myGlobals.locationArr[1].sites.siteOptions[0];
+  myGlobals.selection2.textContent = myGlobals.locationArr[1].sites.siteOptions[1];
+  myGlobals.selection3.textContent = myGlobals.locationArr[1].sites.siteOptions[2];
+  logic.currentLocation = myGlobals.locationArr[1];
+  rerenderPageNodes();
+}
+
+function populateSiteSelectionsClick2() {
+  myGlobals.selection1.textContent = myGlobals.locationArr[2].sites.siteOptions[0];
+  myGlobals.selection2.textContent = myGlobals.locationArr[2].sites.siteOptions[1];
+  myGlobals.selection3.textContent = myGlobals.locationArr[2].sites.siteOptions[2];
+  logic.currentLocation = myGlobals.locationArr[2];
+  rerenderPageNodes();
+}
+>>>>>>> Stashed changes
 
 // // generates the correct site
 // function generateCorrectSite() {
