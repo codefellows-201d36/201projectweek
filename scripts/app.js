@@ -288,7 +288,7 @@ function renderPage() {
   // }
 
   logic.nextLocation = logic.pathToVictory[1];
-
+  logic.correctLocation = logic.pathToVictory[0];
   // Prepare page nodes
   var quit = document.getElementById('userQuit');
   var timestamp = document.getElementById('myTimestamp');
@@ -387,6 +387,7 @@ function clearNode(myId) {
   }
 }
 
+
 // populates the investigation options
 function populateSiteSelections() {
   myGlobals.selection1.textContent = logic.currentLocation.sites.siteOptions[0];
@@ -402,6 +403,23 @@ function populateSiteSelectionsClick0() {
   rerenderPageNodes();
 }
 
+function populateSiteSelectionsClick1() {
+  myGlobals.selection1.textContent = myGlobals.locationArr[1].sites.siteOptions[0];
+  myGlobals.selection2.textContent = myGlobals.locationArr[1].sites.siteOptions[1];
+  myGlobals.selection3.textContent = myGlobals.locationArr[1].sites.siteOptions[2];
+  logic.currentLocation = myGlobals.locationArr[1];
+  rerenderPageNodes();
+}
+
+function populateSiteSelectionsClick2() {
+  myGlobals.selection1.textContent = myGlobals.locationArr[2].sites.siteOptions[0];
+  myGlobals.selection2.textContent = myGlobals.locationArr[2].sites.siteOptions[1];
+  myGlobals.selection3.textContent = myGlobals.locationArr[2].sites.siteOptions[2];
+  logic.currentLocation = myGlobals.locationArr[2];
+  rerenderPageNodes();
+}
+
+
 
 // // generates the correct site
 // function generateCorrectSite() {
@@ -416,24 +434,34 @@ function populateSiteSelectionsClick0() {
 function selection(event) {
   if (event.target.classList[0] === 'siteNavigation1') {
     if (myGlobals.currentLocation === myGlobals.correctLocation) {
-      myGlobals.dynamicText.textContent = logic.nextLocation.questions[0];
+      myGlobals.dynamicText.textContent = logic.nextLocation.questions.clue1;
     } else {
       myGlobals.dynamicText.textContent = 'wrongo bucky';
     }
   } else if (event.target.classList[0] === 'siteNavigation2') {
     if (myGlobals.currentLocation === myGlobals.correctLocation) {
-      myGlobals.dynamicText.textContent = logic.nextLocation.questions[1];
+      myGlobals.dynamicText.textContent = logic.nextLocation.questions.clue2;
     } else {
       myGlobals.dynamicText.textContent = 'wrongo bucky';
     }
   } else if (event.target.classList[0] === 'siteNavigation3') {
     if (myGlobals.currentLocation === myGlobals.correctLocation) {
-      myGlobals.dynamicText.textContent = logic.nextLocation.questions[0];
+      myGlobals.dynamicText.textContent = logic.nextLocation.questions.clue3;
+      logic.pathToVictory.shift();
+      logic.correctLocation = logic.pathToVictory[0];
+      logic.nextLocation = logic.pathToVictory[1];
+      console.log(logic.pathToVictory);
     } else {
       myGlobals.dynamicText.textContent = 'wrongo bucky';
     }
   } else if (event.target.classList[0] === 'travelNavigation1') {
     populateSiteSelectionsClick0();
+  } else if (event.target.classList[0] === 'travelNavigation2') {
+    populateSiteSelectionsClick1();
+  } else if (event.target.classList[0] === 'travelNavigation3') {
+    populateSiteSelectionsClick2();
+  } else {
+    console.log('issue populating sites detected');
   }
 }
 
