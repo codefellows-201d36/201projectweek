@@ -12,6 +12,16 @@
 * Photo by Ganapathy Kumar on Unsplash: https://unsplash.com/photos/o4ktwpTEQso
 * Photo by John Price on Unsplash: https://unsplash.com/photos/q44sI_C5FtI 
 * Photo by 'Brycethedragon' on Pixabay: https://cdn.pixabay.com/photo/2014/12/11/00/21/sunset-563682_1280.jpg
+* Photo by Joe Mabel: https://upload.wikimedia.org/wikipedia/commons/2/2b/University_of_Washington_Quad_cherry_blossoms_2017_-_09.jpg
+* Photo by Wikipedia Commons https://upload.wikimedia.org/wikipedia/commons/b/b3/Ballard_Locks_Cleaning_2012-03-18_04.jpg
+* Photo by Jim Simmons http://www.tukwilareporter.com/wp-content/uploads/2017/01/web1_170120-TUK-southcenter-tsr.jpg
+* Photo Courtsey of Sound Transit https://mwbbcwxck32zpp124d9nlwip-wpengine.netdna-ssl.com/wp-content/uploads/2016/10/web1_161026-sea-feature-transit-1024x683@2x.jpg
+* Photo by Vincent Camacho https://images.unsplash.com/photo-1526798923986-3e70a1af1981?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d9f6df859c9927ee7734341a4ee0f032&auto=format&fit=crop&w=1868&q=80
+* Photo by Michael Matti https://farm9.staticflickr.com/8109/8648251635_be6ca25329_h.jpg
+* Photo by Philip Cohen https://farm8.staticflickr.com/7537/15869843068_5c643ba56a_b.jpg
+* Photo under free use if not for profit https://www.aisc.org/globalassets/nsba/prize-bridge-awards/2007/lincoln_square_ped_05.jpg
+* Photo by Chrismiceli https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Bicycle_Capital_of_the_Northwest.JPG/1200px-Bicycle_Capital_of_the_Northwest.JPG
+
 # Audio
 * Click.wav by kwahmah_02: https://freesound.org/people/kwahmah_02/sounds/256116/
 
