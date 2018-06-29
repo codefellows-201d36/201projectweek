@@ -260,6 +260,67 @@ var wrongLocationAnswers = {
   wrong17:`Nothing unusual ever happens around here.`,
 };
 
+var centralSeattleFact = {
+  'Recognized around the globe, the space needle was built for the 1962 World\'s Fair, which drew over 2.3 million visitors.'
+};
+
+var seattleWaterFrontFact = {
+  'The Seattle waterfront is most known for Pike Place Market. Thanks to its famouse flying fish, its the world\'s 33rd most visited tourist attraction.'
+};
+
+var ballardFact = {
+  'Located in Northwestern Seattle, Ballard is historically the center of Scandavian culture. Settlers were drawn to the ideal salmon fishing opportunties.'
+};
+
+var fremontFact = {
+  'Now a neighborhood in Northwestern Seattle, Fremont was its own city until 1891.'
+};
+
+var southSeattleFact = {
+  'Seattle\'s International District is comprised of three neighbrohoods, colloquially referred to as Chinatown, Japantown, and Little Saigon.'
+};
+
+var bellevueFact = {
+  'There are several cities with the same name in the US and around the world. It is derived from the French words for "beautiful view".'
+};
+
+var redmondFact = {
+  'Redmond is sometimes referred to as the "bicycle capital of the world". It hosts an annual bike race on city streets.'
+};
+
+var tacomaFact = {
+  'At the time the third longest suspension bridge in the world, the Tacoma Narrows Bridge notoriously collasped in 1940 due to strong wind conditions combined with faulty construction.'
+};
+
+var leavenworthFact = {
+  'Incorporated in 1906, Leavenworth was converted to a Bavarian style village in the 1960s as a project to revitalize the former struggling logging town.'
+};
+
+var wallaWallaFact = {
+  'Incorporated in 1862, Walla Walla was briefly the most populous city in the territory of Washington as a result of a gold rush in Idaho.'
+};
+
+var westCoastFact = {
+  'Forks is a small logging town in the Northwest corner of the state that has gained recent popularity as the setting of the "Twilight" book series.'
+};
+
+var seaTacTukwilaFact = {
+  'Proabably quite obvious to most, the SeaTac name is a combination of the names Seattle and Tacoma. The city is quite small at only 27,000 people as of a 2010 census.'
+};
+
+var universityDistrictFact = {
+  'University District is so named for being the location of the University of Washington, which has been in that location since 1895.'
+};
+
+var bellinghamFact = {
+  'George Vancouver named "Bellingham" after a member of the British Royal Navy, Sir William Bellingham, after his visit to the area.'
+};
+
+var spokaneFact = {
+  'Spokane is commonly believed to be the birthplace of "Father\'s Day." The first one is said to have been celebrated in 1910.'
+};
+
+
 // =========================================================================================================================
 // Functions
 // =========================================================================================================================
@@ -292,10 +353,9 @@ function renderPage() {
   // }
 
   logic.nextLocation = logic.pathToVictory[1];
-
+  logic.correctLocation = logic.pathToVictory[0];
   // Prepare page nodes
   var quit = document.getElementById('userQuit');
-  var timestamp = document.getElementById('myTimestamp');
   var siteHeading = document.getElementById('myHeading');
   var currentLocationImage = document.getElementById('locationImage');
   var travelButton = document.getElementById('btnTravel');
@@ -305,7 +365,7 @@ function renderPage() {
 
   // Render pages nodes
   quit.textContent = 'Leave Game';
-  timestamp.textContent = logic.timeRemaining;
+
   siteHeading.textContent = logic.currentLocation.city;
   currentLocationImage.src = logic.currentLocation.cityImage;
   travelButton.textContent = 'Travel';
@@ -384,21 +444,15 @@ Math.getDistance = function(x1, y1, x2, y2) {
 };
 
 // clears the page nodes
-<<<<<<< Updated upstream
+
 function clearNode(myId) {
   var node = document.getElementById(myId);
   while (node.hasChildNodes()) {
     node.removeChild(node.firstChild);
   }
 }
-=======
-// function clearNode(myId) {
-//   var node = document.getElementById(myId);
-//   while (node.hasChildNodes()) {
-//     node.removeChild(node.firstChild);
-//   }
-// }
->>>>>>> Stashed changes
+
+
 
 // populates the investigation options
 function populateSiteSelections() {
@@ -415,8 +469,7 @@ function populateSiteSelectionsClick0() {
   rerenderPageNodes();
 }
 
-<<<<<<< Updated upstream
-=======
+
 function populateSiteSelectionsClick1() {
   myGlobals.selection1.textContent = myGlobals.locationArr[1].sites.siteOptions[0];
   myGlobals.selection2.textContent = myGlobals.locationArr[1].sites.siteOptions[1];
@@ -432,7 +485,7 @@ function populateSiteSelectionsClick2() {
   logic.currentLocation = myGlobals.locationArr[2];
   rerenderPageNodes();
 }
->>>>>>> Stashed changes
+
 
 // // generates the correct site
 // function generateCorrectSite() {
@@ -445,26 +498,53 @@ function populateSiteSelectionsClick2() {
 // =========================================================================================================================
 // for selection <li>'s
 function selection(event) {
+  var myTimeStamp = document.getElementById('myTimestamp');
   if (event.target.classList[0] === 'siteNavigation1') {
     if (myGlobals.currentLocation === myGlobals.correctLocation) {
-      myGlobals.dynamicText.textContent = logic.nextLocation.questions[0];
+      myGlobals.dynamicText.textContent = logic.nextLocation.questions.clue1;
+      logic.timeRemaining --;
+      myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
     } else {
       myGlobals.dynamicText.textContent = 'wrongo bucky';
+      logic.timeRemaining --;
+      myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
     }
   } else if (event.target.classList[0] === 'siteNavigation2') {
     if (myGlobals.currentLocation === myGlobals.correctLocation) {
-      myGlobals.dynamicText.textContent = logic.nextLocation.questions[1];
+      myGlobals.dynamicText.textContent = logic.nextLocation.questions.clue2;
+      logic.timeRemaining --;
+      myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
     } else {
       myGlobals.dynamicText.textContent = 'wrongo bucky';
+      logic.timeRemaining --;
+      myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
     }
   } else if (event.target.classList[0] === 'siteNavigation3') {
     if (myGlobals.currentLocation === myGlobals.correctLocation) {
-      myGlobals.dynamicText.textContent = logic.nextLocation.questions[0];
+      myGlobals.dynamicText.textContent = logic.nextLocation.questions.clue3;
+      logic.timeRemaining --;
+      myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
+      logic.pathToVictory.shift();
+      logic.correctLocation = logic.pathToVictory[0];
+      logic.nextLocation = logic.pathToVictory[1];
+      console.log(logic.pathToVictory);
     } else {
       myGlobals.dynamicText.textContent = 'wrongo bucky';
     }
   } else if (event.target.classList[0] === 'travelNavigation1') {
     populateSiteSelectionsClick0();
+    logic.timeRemaining -=5;
+    myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
+  } else if (event.target.classList[0] === 'travelNavigation2') {
+    populateSiteSelectionsClick1();
+    logic.timeRemaining -=5;
+    myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
+  } else if (event.target.classList[0] === 'travelNavigation3') {
+    populateSiteSelectionsClick2();
+    logic.timeRemaining -=5;
+    myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
+  } else {
+    console.log('issue populating sites detected');
   }
 }
 
