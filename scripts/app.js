@@ -291,7 +291,6 @@ function renderPage() {
   logic.correctLocation = logic.pathToVictory[0];
   // Prepare page nodes
   var quit = document.getElementById('userQuit');
-  var timestamp = document.getElementById('myTimestamp');
   var siteHeading = document.getElementById('myHeading');
   var currentLocationImage = document.getElementById('locationImage');
   var travelButton = document.getElementById('btnTravel');
@@ -301,7 +300,7 @@ function renderPage() {
 
   // Render pages nodes
   quit.textContent = 'Leave Game';
-  timestamp.textContent = logic.timeRemaining;
+
   siteHeading.textContent = logic.currentLocation.city;
   currentLocationImage.src = logic.currentLocation.cityImage;
   travelButton.textContent = 'Travel';
@@ -432,21 +431,32 @@ function populateSiteSelectionsClick2() {
 // =========================================================================================================================
 // for selection <li>'s
 function selection(event) {
+  var myTimeStamp = document.getElementById('myTimestamp');
   if (event.target.classList[0] === 'siteNavigation1') {
     if (myGlobals.currentLocation === myGlobals.correctLocation) {
       myGlobals.dynamicText.textContent = logic.nextLocation.questions.clue1;
+      logic.timeRemaining --;
+      myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
     } else {
       myGlobals.dynamicText.textContent = 'wrongo bucky';
+      logic.timeRemaining --;
+      myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
     }
   } else if (event.target.classList[0] === 'siteNavigation2') {
     if (myGlobals.currentLocation === myGlobals.correctLocation) {
       myGlobals.dynamicText.textContent = logic.nextLocation.questions.clue2;
+      logic.timeRemaining --;
+      myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
     } else {
       myGlobals.dynamicText.textContent = 'wrongo bucky';
+      logic.timeRemaining --;
+      myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
     }
   } else if (event.target.classList[0] === 'siteNavigation3') {
     if (myGlobals.currentLocation === myGlobals.correctLocation) {
       myGlobals.dynamicText.textContent = logic.nextLocation.questions.clue3;
+      logic.timeRemaining --;
+      myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
       logic.pathToVictory.shift();
       logic.correctLocation = logic.pathToVictory[0];
       logic.nextLocation = logic.pathToVictory[1];
@@ -456,10 +466,16 @@ function selection(event) {
     }
   } else if (event.target.classList[0] === 'travelNavigation1') {
     populateSiteSelectionsClick0();
+    logic.timeRemaining -=5;
+    myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
   } else if (event.target.classList[0] === 'travelNavigation2') {
     populateSiteSelectionsClick1();
+    logic.timeRemaining -=5;
+    myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
   } else if (event.target.classList[0] === 'travelNavigation3') {
     populateSiteSelectionsClick2();
+    logic.timeRemaining -=5;
+    myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
   } else {
     console.log('issue populating sites detected');
   }
