@@ -155,7 +155,7 @@ var centralSeattlePointer = {
 var waterFrontPointer = {
   clue1:`I saw the person you’re looking for an he was obsessed with seeing some flying fish`,
   clue2:`${Suspects.name} told me that the London Eye was a lot of fun and was on the hunt for something similar.`,
-  clue3:`${Suspects.name}? He’s a huage fan of sea otters. He wants to see a bunch of them in one place.`,
+  clue3:`${Suspects.name}? He’s a huge fan of sea otters. He wants to see a bunch of them in one place.`,
 };
 
 var ballardPointer = {
@@ -300,7 +300,7 @@ function renderPage() {
 
   // Render pages nodes
   quit.textContent = 'Leave Game';
-
+  myGlobals.dynamicText.textContent = logic.correctLocation.questions.clue1;
   siteHeading.textContent = logic.currentLocation.city;
   currentLocationImage.src = logic.currentLocation.cityImage;
   travelButton.textContent = 'Travel';
@@ -460,7 +460,9 @@ function selection(event) {
       logic.pathToVictory.shift();
       logic.correctLocation = logic.pathToVictory[0];
       logic.nextLocation = logic.pathToVictory[1];
+      randomLocations();
       console.log(logic.pathToVictory);
+      EventTarget.removeEventListener();
     } else {
       myGlobals.dynamicText.textContent = 'wrongo bucky';
     }
@@ -494,13 +496,15 @@ function investigation(event) {
 
 // for travel <li>
 function travel(event) {
-  randomLocations();
   myGlobals.selection1.classList.remove('siteNavigation1');
   myGlobals.selection2.classList.remove('siteNavigation2');
   myGlobals.selection3.classList.remove('siteNavigation3');
   myGlobals.selection1.classList.add('travelNavigation1');
   myGlobals.selection2.classList.add('travelNavigation2');
   myGlobals.selection3.classList.add('travelNavigation3');
+  for (var i=0; i < myGlobals.locationArr.length; i++) {
+    myGlobals.locationSelections[i].textContent = myGlobals.locationArr[i].city;
+  }
 }
 
 // =========================================================================================================================
