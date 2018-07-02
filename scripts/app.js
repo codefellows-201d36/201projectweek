@@ -25,10 +25,10 @@ var myGlobals = {
 myGlobals.locationSelections.push(myGlobals.selection1,myGlobals.selection2, myGlobals.selection3);
 
 var logic = {
-  cluesNeededToWin: 3,
+  cluesNeededToWin: 7,
   pathToVictory: [],
   playerProgress: 0,
-  timeRemaining: 120, // time left in hours
+  timeRemaining: parseInt(localStorage.getItem('gameProgress')) || 120,
   siteTravel: [1, 2, 3],
   finalRound: false,
   nextLocation: [],
@@ -71,12 +71,6 @@ var SiteOptions = function(siteOptions, siteImages){
   this.siteOptions = siteOptions;
   this.siteImages = siteImages;
   myGlobals.allSites.push(this);
-};
-
-var Coordinates = function(x,y){
-  this.x = x;
-  this.y = y;
-  myGlobals.allCoordinates.push(this);
 };
 
 // =========================================================================================================================
@@ -189,26 +183,6 @@ var spokanePointer = {
   clue3:`I couldn’t tell you why, but lately ${Suspects.name} has become obsessed with hanging out in the 2nd largest city in WA state. Weird guy, am I right?`,
 };
 
-var wrongLocationAnswers = {
-  wrong1:`I’m awfully busy around here. I haven’t seen this ${Suspects.name} character anywhere.`,
-  wrong2:`I’m sorry, I have never seen the person you are looking for.`,
-  wrong3:`I’m not supposed to talk to strangers!`,
-  wrong4:`I have not seen anyone matching that description.`,
-  wrong5:`Can’t talk. I’m late for a very important date.`,
-  wrong6:`What do I look like, Google?`,
-  wrong7:`Why don’t you ask Siri?`,
-  wrong8:`I haven’t seen this ${Suspects.name} character, but do you know anyone who wants to foster a kitten? I found a box full of them this morning and I already have 6 cats.`,
-  wrong9:`Sorry friend, I don’t have time for this. I do CrossFit.`,
-  wron10:`I’ve never seen anyone dressed like that.`,
-  wrong11:`I have no information to give you.`,
-  wrong12:`I wish I had something for you.`,
-  wrong13:`A soccer ball bonked me in the head yesterday. I might have amnesia. Who are you again?`,
-  wrong14:`Actually, I’m new around here. I don’t think I’d be of much help.`,
-  wrong15:`I ate a "medicinal cookie" earlier and I feel strange. What was the question again?`,
-  wrong16:`I’m just about to leave. Can you come back tomorrow?`,
-  wrong17:`Nothing unusual ever happens around here.`,
-};
-
 // city facts ===============================================
 var cityFact = {
   centralSeattle: 'Recognized around the globe, the space needle was built for the 1962 World\'s Fair, which drew over 2.3 million visitors.',
@@ -227,23 +201,6 @@ var cityFact = {
   bellingham: 'George Vancouver named "Bellingham" after a member of the British Royal Navy, Sir William Bellingham, after his visit to the area.',
   spokane: 'Spokane is commonly believed to be the birthplace of "Father\'s Day." The first one is said to have been celebrated in 1910.',
 };
-
-// coordinates ===============================================
-new Coordinates(5, 5);//[0]
-new Coordinates(4.9, 5);//[1]
-new Coordinates(4.9, 5.1);//[2]
-new Coordinates(5, 5.1);//[3]
-new Coordinates(5, 4.9);//[4]
-new Coordinates(6, 5);//[5]
-new Coordinates(6, 6);//[6]
-new Coordinates(6.4, 4.5 );//[7]
-new Coordinates(7, 5.2);//[8]
-new Coordinates(7.5, 9.6);//[9]
-new Coordinates(0.6, 3);//[10]
-new Coordinates(5.3, 5);//[11]
-new Coordinates(5.6, 5);//[12]
-new Coordinates(4, 1);//[13]
-new Coordinates(9, 4.8);//[14]
 
 // sites ===============================================
 new SiteOptions(['Seattle Art Museum','Amazon','Space Needle'],['random image','random image','random image']);//[0]
@@ -499,11 +456,13 @@ function selection(event) {
       myGlobals.dynamicText.textContent = logic.nextLocation.questions.clue1;
       myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
       clearList();
+      gameProgress();
     } else {
       logic.timeRemaining --;
       myGlobals.dynamicText.textContent = 'wrongo bucky';
       myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
       clearList();
+      gameProgress();
     }
 
   // Site 2 Navigation
@@ -513,11 +472,13 @@ function selection(event) {
       myGlobals.dynamicText.textContent = logic.nextLocation.questions.clue2;
       myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
       clearList();
+      gameProgress();
     } else {
       logic.timeRemaining --;
       myGlobals.dynamicText.textContent = 'wrongo bucky';
       myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
       clearList();
+      gameProgress();
     }
 
   // Site 3 Navigation
@@ -527,11 +488,13 @@ function selection(event) {
       myGlobals.dynamicText.textContent = logic.nextLocation.questions.clue3;
       myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
       clearList();
+      gameProgress();
     } else {
       logic.timeRemaining --;
       myGlobals.dynamicText.textContent = 'wrongo bucky';
       myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
       clearList();
+      gameProgress();
     }
 
   // Travel 1 Navigation
@@ -541,7 +504,7 @@ function selection(event) {
     event.target.classList.remove('travelNavigation1');
     myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
     clearList();
-
+    gameProgress();
   // Travel 2 Navigation
   } else if (event.target.classList[0] === 'travelNavigation2') {
     populateSiteSelectionsClick1();
@@ -549,7 +512,7 @@ function selection(event) {
     event.target.classList.remove('travelNavigation2');
     myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
     clearList();
-
+    gameProgress();
     // Travel 3 Navigation
   } else if (event.target.classList[0] === 'travelNavigation3') {
     populateSiteSelectionsClick2();
@@ -557,7 +520,7 @@ function selection(event) {
     event.target.classList.remove('travelNavigation3');
     myTimeStamp.textContent = 'Remaining: ' + logic.timeRemaining + ' hours';
     clearList();
-
+    gameProgress();
   // Error Handling
   } else {
     console.log('Something went wrong');
@@ -579,6 +542,7 @@ function investigation() { //removed event
   myGlobals.selection1.classList.add('siteNavigation1');
   myGlobals.selection2.classList.add('siteNavigation2');
   myGlobals.selection3.classList.add('siteNavigation3');
+  gameProgress();
 }
 
 // for travel <li>
@@ -592,7 +556,13 @@ function travel() { //removed event
   for (var i=0; i < myGlobals.locationArr.length; i++) {
     myGlobals.locationSelections[i].textContent = myGlobals.locationArr[i].city;
   }
+  gameProgress();
 }
+
+// localStorage
+var gameProgress = function() {
+  localStorage.setItem('gameProgress', JSON.stringify(logic.timeRemaining));
+};
 
 // =========================================================================================================================
 // Execution Code
