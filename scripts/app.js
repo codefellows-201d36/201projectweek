@@ -442,6 +442,7 @@ function selection(event) {
 
   // Check if GAME FAIL
   if(logic.timeRemaining <= 1) {
+    localStorage.removeItem('gameProgress');
     gameOver();
     console.log('GAME OVER');
 
@@ -530,6 +531,7 @@ function selection(event) {
 function gameSuccess () {
   console.log('You successfully apprehended Brian Nations! Well done!');
   myGlobals.dynamicText.textContent = 'You successfully apprehended Brian Nations in time, and prevented him from stealing your style. Great job, detective!\n\nPress Ctrl+R or F5 to play again.';
+  localStorage.removeItem('gameProgress');
   deactiveGame();
 }
 
