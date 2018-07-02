@@ -69,14 +69,15 @@ body {
 /****** Header Styles ******/
 header h1 {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 26px;
+  font-size: 30px;
   margin-top: 25px;
   text-align: center;
   text-transform: lowercase;
 }
 header h2 {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 16px;
+  font-size: 20px;
+  font-weight: bold;
   margin-top: 5px;
   margin-bottom: 25px;
   text-align: center;

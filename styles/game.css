@@ -28,6 +28,11 @@ body a:active  { color: #ffffff; text-decoration: none; }
   font-weight: bold;
 }
 
+.gameover {
+  font-size: 20px;
+  text-align: center;
+  color: #444;
+}
 /****** Grid Setup ******/
 .a1 {
   grid-column: 1 / 2;
